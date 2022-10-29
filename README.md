@@ -10,3 +10,7 @@
 2. Trỏ domain vào folder/dist
 3. Run npm start:dev
    `pm2 start dist/main.js --name "nestjs-api"`
+
+
+/var/www/duan/nestjs-api-ecm
+
