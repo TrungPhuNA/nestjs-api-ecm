@@ -6,6 +6,6 @@ import { ApiTags } from "@nestjs/swagger";
 export class AppController {
     @Get()
     getHello(): string {
-        return "OK CHAO BAN";
+        return "API ECM";
     }
 }
