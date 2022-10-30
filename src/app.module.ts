@@ -4,6 +4,7 @@ import { BackendModule } from './backend/backend.module';
 import { FrontendModule } from './frontend/frontend.module';
 import { ConfigModule } from "@nestjs/config";
 import { DatabaseModule } from './database/database.module';
+import { AuthModule } from './auth/auth.module';
 import * as Joi from '@hapi/joi';
 
 @Module({
@@ -20,7 +21,8 @@ import * as Joi from '@hapi/joi';
                 MYSQL_DB: Joi.string().required(),
                 PORT: Joi.number(),
             })
-        })
+        }),
+        AuthModule
     ],
     controllers: [AppController],
     providers: [],
