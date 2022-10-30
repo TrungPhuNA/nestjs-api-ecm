@@ -20,7 +20,7 @@ jobs:
                   HOST: ${{ secrets.IP }}
                   USERNAME: ${{ secrets.USERNAME }}
                   PORT: ${{ secrets.PORT }}
-                  KEY: ${{ secrets.SSH_KEY }}
+#                  KEY: ${{ secrets.SSH_KEY }}
                   PASSWORD: "12345678@"
 #                  KEY: ${{ secrets.SSH_KEY }}
               with:
