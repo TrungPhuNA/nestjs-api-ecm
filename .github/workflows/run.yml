@@ -34,6 +34,6 @@ jobs:
                   PASSWORD: ${{ secrets.PASSWORD }}
                   script: |
                       cd /var/www/duan/nestjs-api-ecm
-                      git pull
+                      git pull origin master
                       npm run build
                       pm2 restart api-ecm
