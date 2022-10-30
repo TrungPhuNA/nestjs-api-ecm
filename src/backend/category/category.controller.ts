@@ -1,8 +1,11 @@
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Req } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CategoryService } from "./category.service";
 import CreateCategoryDto from "./dto/CreateCategory.dto";
 import UpdateCategoryDto from "./dto/UpdateCategory.dto";
+import { ResponseData } from "../../common/response/ResponseData";
+import { Request } from 'express';
+import { Paging } from "../../common/response/Paging";
 
 @Controller('cms/category')
 @ApiTags('BE / Category')
@@ -11,9 +14,25 @@ export class CategoryController {
     constructor(private categoryService: CategoryService) {}
 
     @Get('lists')
-    async getListsCategory()
+    async getListsCategory(
+        @Req() request: Request
+    )
     {
-        return await this.categoryService.getListsCategory();
+        const paging = {
+            page: request.query.page || 1,
+            page_size: request.query.page_size || 10,
+        }
+
+        const filters = {
+            hot : request.query.hot || "",
+            status : request.query.status || "",
+        }
+
+        const response = await this.categoryService.getListsCategory(paging, filters);
+        const [data, total] = response;
+        const pagingData = new Paging(Number(paging.page), Number(paging.page_size), total);
+
+        return new ResponseData(200, data, "success", pagingData);
     }
 
     @Post('store')
@@ -21,13 +40,15 @@ export class CategoryController {
         @Body() categoryDto: CreateCategoryDto
     )
     {
-        return await this.categoryService.store(categoryDto)
+        const data = await this.categoryService.store(categoryDto);
+        return new ResponseData(200, data);
     }
 
     @Get('show/:id')
     async show(id)
     {
-        return await this.categoryService.show(id);
+        const data = await this.categoryService.show(id);
+        return new ResponseData(200, data);
     }
 
     @Put('update/:id')
@@ -36,6 +57,7 @@ export class CategoryController {
         @Param('id') id: number
     )
     {
-        return await this.categoryService.update(id, categoryDto)
+        const response = await this.categoryService.update(id, categoryDto);
+        return new ResponseData(200, response);
     }
 }

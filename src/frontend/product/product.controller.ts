@@ -14,20 +14,8 @@ export class ProductController {
         return await this.productService.getListsProducts();
     }
 
-    @Post('store')
-    async store()
-    {
-        return await this.productService.getListsProducts();
-    }
-
     @Get('show/:id')
     async show()
-    {
-        return await this.productService.getListsProducts();
-    }
-
-    @Put('update/:id')
-    async update()
     {
         return await this.productService.getListsProducts();
     }

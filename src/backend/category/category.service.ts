@@ -11,9 +11,17 @@ export class CategoryService {
     @InjectRepository(CategoryEntity)
     private categoryRepository: Repository<CategoryEntity>
 
-    async getListsCategory()
+    async getListsCategory(paging: any, filters: any)
     {
-        return await this.categoryRepository.findAndCount();
+        let condition: any = {};
+        if (filters.hot) condition.c_hot = filters.hot;
+        if (filters.status) condition.c_status = filters.status;
+
+        return await this.categoryRepository.findAndCount({
+            where: condition,
+            take: paging.page_size,
+            skip: (paging.page - 1) * paging.page_size
+        });
     }
 
     async store(categoryDto: CreateCategoryDto)
