@@ -35,5 +35,6 @@ jobs:
                   script: |
                       cd /var/www/duan/nestjs-api-ecm
                       git pull origin master
+                      npm install
                       npm run build
                       pm2 restart api-ecm
