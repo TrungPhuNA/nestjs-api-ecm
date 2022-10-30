@@ -17,3 +17,9 @@
 
 
 https://gist.github.com/stancl/cab04a411f136047e80c1de81528eb23 
+
+- Danh mục
+  - Top danh mục
+  - Danh mục nổi bật 
+- Sản phm
+  - Sản phẩm giảm giá
