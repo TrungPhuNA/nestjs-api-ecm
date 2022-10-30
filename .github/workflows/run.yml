@@ -14,24 +14,25 @@ jobs:
         steps:
             - uses: actions/checkout@v1
 
-            - name: Copy Repository Contents via scp
+            - name: SCP FOLDER
               uses: appleboy/scp-action@master
               env:
                   HOST: ${{ secrets.IP }}
                   USERNAME: ${{ secrets.USERNAME }}
                   PORT: ${{ secrets.PORT }}
-#                  KEY: ${{ secrets.SSH_KEY }}
-                  PASSWORD: "12345678@"
-#                  KEY: ${{ secrets.SSH_KEY }}
+                  PASSWORD: ${{ secrets.PASSWORD }}
               with:
                   source: "."
                   target: "/var/www/duan/nestjs-api-ecm"
 
-            - name: Executing remote command
+            - name: Deploy
               uses: appleboy/ssh-action@master
               with:
-                  host: ${{ secrets.IP }}
+                  HOST: ${{ secrets.IP }}
                   USERNAME: ${{ secrets.USERNAME }}
                   PORT: ${{ secrets.PORT }}
-                  KEY: ${{ secrets.SSH_KEY }}
-                  script: ls
+                  PASSWORD: ${{ secrets.PASSWORD }}
+                  script: |
+                      git pull
+                      npm run build
+                      pm2 restart api-ecm
