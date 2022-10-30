@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Deploy API
 
 on:
     push:
@@ -35,7 +35,7 @@ jobs:
                 with:
                     host: ${{ secrets.IP }}
                     username: ${{ secrets.USERNAME }}
-                    key: ${{ secrets.KEY }}
+                    key: ${{ secrets.SSH_KEY }}
                     script: |
                         cd /var/www/duan/nestjs-api-ecm
                         git checkout .
