@@ -33,6 +33,7 @@ jobs:
                   PORT: ${{ secrets.PORT }}
                   PASSWORD: ${{ secrets.PASSWORD }}
                   script: |
+                      pwd
                       git pull
                       npm run build
                       pm2 restart api-ecm
