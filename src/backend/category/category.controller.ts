@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Req } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Req } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CategoryService } from "./category.service";
 import CreateCategoryDto from "./dto/CreateCategory.dto";
@@ -45,7 +45,9 @@ export class CategoryController {
     }
 
     @Get('show/:id')
-    async show(id)
+    async show(
+        @Param('id', ParseIntPipe) id: number
+    )
     {
         const data = await this.categoryService.show(id);
         return new ResponseData(200, data);

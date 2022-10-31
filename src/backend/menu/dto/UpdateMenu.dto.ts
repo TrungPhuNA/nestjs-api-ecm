@@ -1,0 +1,23 @@
+import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+
+class UpdateMenuDto {
+    @IsString()
+    @IsNotEmpty()
+    mn_name: string;
+
+    pro_slug: string;
+    pro_avatar: string;
+
+    @IsNotEmpty()
+    mn_description: string;
+
+    @IsNotEmpty()
+    @IsNumber()
+    mn_hot: number | 0;
+
+    @IsNotEmpty()
+    @IsNumber()
+    mn_status: number | 0;
+}
+
+export default UpdateMenuDto;

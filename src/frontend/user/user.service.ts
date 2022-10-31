@@ -23,4 +23,10 @@ export class UserService {
             }
         });
     }
+
+    async updateInfo(id: number, updateUser: any)
+    {
+        await this.userRepository.update(id, updateUser);
+        return await this.findById(id);
+    }
 }

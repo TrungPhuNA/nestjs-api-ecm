@@ -5,6 +5,7 @@ import { FrontendModule } from './frontend/frontend.module';
 import { ConfigModule } from "@nestjs/config";
 import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
+import { UploadModule } from './upload/upload.module';
 import * as Joi from '@hapi/joi';
 
 @Module({
@@ -20,9 +21,11 @@ import * as Joi from '@hapi/joi';
                 MYSQL_PASSWORD: Joi.string().required(),
                 MYSQL_DB: Joi.string().required(),
                 PORT: Joi.number(),
-            })
+                UPLOADED_FILES_DESTINATION: Joi.string().required(),
+            }),
         }),
-        AuthModule
+        AuthModule,
+        UploadModule
     ],
     controllers: [AppController],
     providers: [],
