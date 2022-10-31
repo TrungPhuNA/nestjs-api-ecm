@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 import CategoryEntity from "../../entities/category.entity";
 import CreateCategoryDto from "./dto/CreateCategory.dto";
 import UpdateCategoryDto from "./dto/UpdateCategory.dto";
+import { toSlug } from "../../common/helpers/Function";
 
 @Injectable()
 export class CategoryService {
@@ -26,6 +27,7 @@ export class CategoryService {
 
     async store(categoryDto: CreateCategoryDto)
     {
+        categoryDto.c_slug = toSlug(categoryDto.c_name);
         const newData = await this.categoryRepository.create(categoryDto);
         return await this.categoryRepository.save(newData);
     }
@@ -41,6 +43,7 @@ export class CategoryService {
 
     async update(id: number, categoryDto: UpdateCategoryDto)
     {
+        categoryDto.c_slug = toSlug(categoryDto.c_name);
         await this.categoryRepository.update(id, categoryDto);
         return await this.show(id);
     }

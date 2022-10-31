@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 import ArticleEntity from "../../entities/article.entity";
 import CreateArticleDto from "./dto/CreateArticle.dto";
 import UpdateArticleDto from "./dto/UpdateArticle.dto";
+import { toSlug } from "../../common/helpers/Function";
 
 @Injectable()
 export class ArticleService {
@@ -25,6 +26,7 @@ export class ArticleService {
 
     async store(articleDto: CreateArticleDto)
     {
+        articleDto.a_slug = toSlug(articleDto.a_name);
         const newData = await this.articleRepository.create(articleDto);
         return await this.articleRepository.save(newData);
     }
@@ -40,6 +42,7 @@ export class ArticleService {
 
     async update(id: number, articleDto: UpdateArticleDto)
     {
+        articleDto.a_slug = toSlug(articleDto.a_name);
         await this.articleRepository.update(id, articleDto);
         return await this.show(id);
     }

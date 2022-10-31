@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 import ProductEntity from "../../entities/product.entity";
 import CreateProductDto from "./dto/CreateProduct.dto";
 import UpdateProductDto from "./dto/UpdateProduct.dto";
+import { toSlug } from "../../common/helpers/Function";
 
 @Injectable()
 export class ProductService {
@@ -26,6 +27,7 @@ export class ProductService {
 
     async store(productDto: CreateProductDto)
     {
+        productDto.pro_slug = toSlug(productDto.pro_name);
         const newData = await this.productRepository.create(productDto);
         return await this.productRepository.save(newData);
     }
@@ -41,6 +43,7 @@ export class ProductService {
 
     async update(id: number, productDto: UpdateProductDto)
     {
+        productDto.pro_slug = toSlug(productDto.pro_name);
         await this.productRepository.update(id, productDto);
         return await this.show(id);
     }

@@ -5,8 +5,8 @@ class CreateMenuDto {
     @IsNotEmpty()
     mn_name: string;
 
-    pro_slug: string;
-    pro_avatar: string;
+    mn_slug: string;
+    mn_avatar: string;
 
     @IsNotEmpty()
     mn_description: string;

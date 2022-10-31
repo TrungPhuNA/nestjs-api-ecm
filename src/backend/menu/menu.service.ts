@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 import MenuEntity from "../../entities/menu.entity";
 import CreateMenuDto from "./dto/CreateMenu.dto";
 import UpdateMenuDto from "./dto/UpdateMenu.dto";
+import { toSlug } from "../../common/helpers/Function";
 
 @Injectable()
 export class MenuService {
@@ -25,6 +26,7 @@ export class MenuService {
 
     async store(menuDto: CreateMenuDto)
     {
+        menuDto.mn_slug = toSlug(menuDto.mn_name);
         const newData = await this.menuRepository.create(menuDto);
         return await this.menuRepository.save(newData);
     }
@@ -40,6 +42,7 @@ export class MenuService {
 
     async update(id: number, menuDto: UpdateMenuDto)
     {
+        menuDto.mn_slug = toSlug(menuDto.mn_name);
         await this.menuRepository.update(id, menuDto);
         return await this.show(id);
     }
