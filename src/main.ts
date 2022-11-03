@@ -1,8 +1,9 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from "@nestjs/core";
 import { AppModule } from './app.module';
 import { ConfigService } from "@nestjs/config";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ValidationPipe } from "@nestjs/common";
+import { ExceptionsLoggerFilter } from "./utils/exceptionsLogger.filter";
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -18,10 +19,10 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, swaggerConfig);
     SwaggerModule.setup('api', app, document);
 
+    const { httpAdapter } = app.get(HttpAdapterHost);
+    app.useGlobalFilters(new ExceptionsLoggerFilter(httpAdapter));
 
-    app.useGlobalPipes(new ValidationPipe({
-        disableErrorMessages: false,
-    }));
+    app.useGlobalPipes(new ValidationPipe());
 
     const port = configService.get('PORT') ?? 3000;
     await app.listen(port);
