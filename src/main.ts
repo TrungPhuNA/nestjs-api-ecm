@@ -23,6 +23,7 @@ async function bootstrap() {
     app.useGlobalFilters(new ExceptionsLoggerFilter(httpAdapter));
 
     app.useGlobalPipes(new ValidationPipe());
+    app.enableCors();
 
     const port = configService.get('PORT') ?? 3000;
     await app.listen(port);
