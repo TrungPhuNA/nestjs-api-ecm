@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, Post, Put, Req } from "@nestjs/common";
+import { Controller, Get, HttpStatus, Param, ParseIntPipe, Post, Put, Req } from "@nestjs/common";
 import { ProductService } from "./product.service";
 import { ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
@@ -36,7 +36,9 @@ export class ProductController {
     }
 
     @Get('show/:id')
-    async show(id: number)
+    async show(
+        @Param('id', ParseIntPipe) id: number
+    )
     {
         const data = await this.productService.show(id);
         return new ResponseData(HttpStatus.OK, data);
