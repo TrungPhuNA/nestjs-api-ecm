@@ -23,11 +23,7 @@ import { APP_FILTER } from "@nestjs/core";
                 MYSQL_PASSWORD: Joi.string().required(),
                 MYSQL_DB: Joi.string().required(),
                 PORT: Joi.number(),
-                UPLOADED_FILES_DESTINATION: Joi.string().required(),
-                ACCESS_TOKEN_SECRET: Joi.string().required(),
-                ACCESS_TOKEN_EXPIRATION: Joi.string().required(),
-                REFRESH_TOKEN_SECRET: Joi.string().required(),
-                REFRESH_TOKEN_EXPIRATION: Joi.string().required(),
+                UPLOADED_FILES_DESTINATION: Joi.string().required()
             }),
         }),
         AuthModule,

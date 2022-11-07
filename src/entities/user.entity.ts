@@ -29,8 +29,8 @@ class User {
     @Column()
     public avatar: number;
 
-    // @Column()
-    // public refresh_token: string;
+    @Column()
+    public refresh_token: string;
 }
 
 export default User;

@@ -1,13 +1,15 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { UserService } from "../frontend/user/user.service";
 import { JwtService } from "@nestjs/jwt";
 import RegisterDto from "./dto/Register.dto";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class AuthService {
     constructor(
         private userService: UserService,
         private jwtService: JwtService,
+        private configService: ConfigService,
     ) {}
 
     async validateUser(username: string, pass: string): Promise<any> {
@@ -21,17 +23,14 @@ export class AuthService {
     }
 
     async login(user: any) {
-        const payload = { username: user.phone, sub: user.id };
-        return {
-            access_token: this.jwtService.sign(payload),
-        };
+        const tokens = await this.getTokens(user.id, user.phone);
+        await this.userService.updateRefreshToken(user.id, tokens.refreshToken);
+        return  tokens;
     }
 
     async create(userDto: RegisterDto) {
         const user = await this.userService.register(userDto);
-        console.log('----------- user: ', user);
         if (user) {
-
             return await this.login(user)
         }
 
@@ -41,5 +40,48 @@ export class AuthService {
     async showUser(id: number)
     {
         return await this.userService.findById(id);
+    }
+
+    async refreshTokens(refreshToken: string) {
+        let decoded =  this.jwtService.verify(refreshToken, this.configService.get('JWT_REFRESH_SECRET'));
+        if (!decoded) {
+            throw new BadRequestException("Không tồn tại Refresh token");
+        }
+
+        const user: any = await this.userService.findById(decoded.sub);
+        if (!user || !user.refresh_token)
+            throw new ForbiddenException('Access Denied');
+
+        const tokens: any = await this.getTokens(user.id, user.username);
+        await this.userService.updateRefreshToken(user.id, tokens.refreshToken);
+        return tokens;
+    }
+
+    async getTokens(userId: number, username: string) {
+        const [accessToken, refreshToken] = await Promise.all([
+            this.jwtService.signAsync(
+                {
+                    sub: userId,
+                    username,
+                },
+                {
+                    expiresIn: '15m',
+                },
+            ),
+            this.jwtService.signAsync(
+                {
+                    sub: userId,
+                    username,
+                },
+                {
+                    expiresIn: '7d',
+                },
+            ),
+        ]);
+
+        return {
+            accessToken,
+            refreshToken,
+        };
     }
 }
