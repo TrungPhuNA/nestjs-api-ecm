@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards, Request, Get, HttpStatus, HttpException, Body } from "@nestjs/common";
+import { Controller, Post, UseGuards, Request, Get, HttpStatus, HttpException, Body, Req } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { LocalAuthGuard } from "./local-auth.guard";
 import { AuthService } from "./auth.service";
@@ -35,6 +35,15 @@ export class AuthController {
     @Post('login')
     async login(@Request() req) {
         const data = await this.authService.login(req.user);
+        return new ResponseData(HttpStatus.OK, data);
+    }
+
+    @Post('refresh')
+    async refreshTokens(
+        @Body() req: any
+    ) {
+        let refresh_token = req.refresh_token;
+        const data = await this.authService.refreshTokens(refresh_token);
         return new ResponseData(HttpStatus.OK, data);
     }
 

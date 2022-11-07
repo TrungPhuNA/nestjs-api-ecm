@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import UserEntity from "../../entities/user.entity";
 import RegisterDto from "../../auth/dto/Register.dto";
+const md5 = require('md5');
 
 @Injectable()
 export class UserService {
@@ -37,5 +38,11 @@ export class UserService {
         return await this.findById(id);
     }
 
-
+    async updateRefreshToken(user_id: number, refresh_token: string)
+    {
+        const hashedRefreshToken = md5(refresh_token);
+        await this.userRepository.update(user_id, {
+            refresh_token: hashedRefreshToken,
+        });
+    }
 }
