@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, Req } from "@nestjs/common";
+import { Controller, Get, HttpStatus, Param, ParseIntPipe, Req } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
 import { Paging } from "../../common/response/Paging";
@@ -34,8 +34,11 @@ export class CategoryController {
     }
 
     @Get('show/:id')
-    async show(id: number)
+    async show(
+        @Param('id', ParseIntPipe) id: number
+    )
     {
+        console.log('-------------- show', id);
         const data = await this.categoryService.show(id);
         return new ResponseData(HttpStatus.OK, data);
     }
