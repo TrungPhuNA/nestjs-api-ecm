@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { IsNotEmpty, IsString } from "class-validator";
 
 @Entity('products')
 class Product {
@@ -25,6 +26,12 @@ class Product {
 
     @Column()
     public pro_category_id: number;
+
+    @Column()
+    pro_discount_type: string
+
+    @Column()
+    pro_discount_value: number | 0
 
     @Column()
     public pro_number: number;

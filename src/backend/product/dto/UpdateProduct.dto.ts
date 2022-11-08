@@ -18,7 +18,14 @@ class UpdateProductDto {
     pro_category_id: number | 0;
 
     pro_number: number | 0;
-    pro_sale: number | 0;
+
+    @IsNotEmpty()
+    @IsString()
+    pro_discount_type: string
+
+    @IsNotEmpty()
+    @IsString()
+    pro_discount_value: number | 0
 
     @IsNotEmpty()
     @IsNumber()

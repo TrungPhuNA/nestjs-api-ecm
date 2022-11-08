@@ -23,3 +23,28 @@ https://gist.github.com/stancl/cab04a411f136047e80c1de81528eb23
   - Danh mục nổi bật 
 - Sản phm
   - Sản phẩm giảm giá
+
+
+
+percent|money
+
+## Công thức tính tiền ở giỏ hàng
+`{
+"name" : "Phan Trung Phú",
+"phone" : "0986420994",
+"address" : "Quỳnh ngọc - Quỳnh Lưu Nghệ AN",
+"note" : "Không có gì",
+"total_price" : 500000,
+"products": [
+{
+"id" : 2,
+"name" : "Sản phẩm 1",
+"quantity" : 2,
+"discount" : 5,
+"price" : 250000,
+"total_price" : 200000
+}
+]
+}`
+
+Tổng tiền đơn hàng = tổng các total_price của từng item

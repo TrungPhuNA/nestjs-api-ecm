@@ -8,8 +8,10 @@ import { Response } from 'express';
 import { createReadStream } from 'fs';
 import { join } from 'path';
 import LocalFilesInterceptor from "../common/helpers/localFiles.interceptor";
+import { ApiTags } from "@nestjs/swagger";
 
 @Controller('upload')
+@ApiTags('Upload')
 export class UploadController {
     @Post('file')
     @UseInterceptors(LocalFilesInterceptor({
