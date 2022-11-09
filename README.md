@@ -48,3 +48,6 @@ percent|money
 }`
 
 Tổng tiền đơn hàng = tổng các total_price của từng item
+
+
+https://typeorm.io/find-options
