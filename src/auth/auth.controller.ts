@@ -26,8 +26,7 @@ export class AuthController {
 
             return new ResponseData(HttpStatus.OK, createdUser);
         } catch (error) {
-            console.log('--------- Error: ', error);
-            throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseData(error.status, error.response,'error');
         }
     }
 

@@ -29,6 +29,23 @@ export class AuthService {
     }
 
     async create(userDto: RegisterDto) {
+
+        // Check tồn tại email / phone / username
+        const checkUsername = await this.userService.findOneByUsername(userDto.username);
+        if (checkUsername) {
+            throw new HttpException(`${userDto.username} đã tồn tại`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        const checkEmail = await this.userService.findOneByEmail(userDto.email);
+        if (checkEmail) {
+            throw new HttpException(`${userDto.email} đã tồn tại`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        const checkPhone = await this.userService.findOneByPhone(userDto.phone);
+        if (checkPhone) {
+            throw new HttpException(`${userDto.phone} đã tồn tại`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         const user = await this.userService.register(userDto);
         if (user) {
             return await this.login(user)

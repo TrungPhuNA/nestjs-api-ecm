@@ -113,4 +113,20 @@ export class UserService {
             refresh_token: hashedRefreshToken,
         });
     }
+
+    async findOneByEmail(email: string) {
+        return this.userRepository.findOne({
+            where : {
+                email : email
+            }
+        });
+    }
+
+    async findOneByPhone(phone: string) {
+        return this.userRepository.findOne({
+            where : {
+                phone : phone
+            }
+        });
+    }
 }
