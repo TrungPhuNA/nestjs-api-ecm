@@ -1,5 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { IsNotEmpty, IsString } from "class-validator";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import Category from "./category.entity";
 
 @Entity('products')
 class Product {
@@ -41,6 +41,10 @@ class Product {
 
     @Column()
     public pro_sale: number;
+
+    @ManyToOne(() => Category, (category) => category.products)
+    @JoinColumn({ name: "pro_category_id", referencedColumnName: "id"})
+    category: Category
 }
 
 export default Product;

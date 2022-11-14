@@ -3,6 +3,8 @@ import { UserService } from "../frontend/user/user.service";
 import { JwtService } from "@nestjs/jwt";
 import RegisterDto from "./dto/Register.dto";
 import { ConfigService } from "@nestjs/config";
+import * as bcrypt from 'bcrypt';
+import { ResponseData } from "../common/response/ResponseData";
 
 @Injectable()
 export class AuthService {
@@ -14,12 +16,18 @@ export class AuthService {
 
     async validateUser(username: string, pass: string): Promise<any> {
         const user = await this.userService.findOneByUsername(username);
-        if (user && user.password === pass) {
-            const { password, ...result } = user;
-            return result;
+
+        if (user) {
+            const isMatchPassword = await bcrypt.compare(pass, user.password);
+            if (isMatchPassword === true) {
+                const { password, ...result } = user;
+                return result;
+            }
+
+            throw new HttpException(`${pass} không chính xác`, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return null;
+        throw new HttpException(`${username} không tồn tại`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     async login(user: any) {

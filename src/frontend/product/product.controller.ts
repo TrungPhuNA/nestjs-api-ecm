@@ -40,7 +40,12 @@ export class ProductController {
         @Param('id', ParseIntPipe) id: number
     )
     {
-        const data = await this.productService.show(id);
-        return new ResponseData(HttpStatus.OK, data);
+        try{
+            const data = await this.productService.show(id);
+            return new ResponseData(HttpStatus.OK, data);
+        }catch (e) {
+            console.log('----------ERROR: ProductController@show => ', e);
+            return new ResponseData(HttpStatus.INTERNAL_SERVER_ERROR, e.response,'error');
+        }
     }
 }

@@ -42,7 +42,8 @@ export class ProductService {
         return await this.productRepository.findOne({
             where: {
                 id: id
-            }
+            },
+            relations: {category : true},
         })
     }
 }

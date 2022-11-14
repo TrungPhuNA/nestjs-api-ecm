@@ -33,8 +33,12 @@ export class AuthController {
     @UseGuards(LocalAuthGuard)
     @Post('login')
     async login(@Request() req) {
-        const data = await this.authService.login(req.user);
-        return new ResponseData(HttpStatus.OK, data);
+        try{
+            const data = await this.authService.login(req.user);
+            return new ResponseData(HttpStatus.OK, data);
+        }catch (e) {
+            console.log('------------ E: ', e);
+        }
     }
 
     @Post('refresh')

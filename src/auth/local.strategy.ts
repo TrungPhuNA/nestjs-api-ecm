@@ -7,7 +7,6 @@ import { ExtractJwt } from "passport-jwt";
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
     constructor(private authService: AuthService) {
-        // super();
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             secretOrKey: process.env.JWT_ACCESS_SECRET,
@@ -15,13 +14,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(username: string, password: string): Promise<any> {
-        console.log('------------ validate: ', username);
-        // check nếu username là email =>>  validate
-
         const user = await this.authService.validateUser(username, password);
 
         if (!user) {
-            console.log('---------- FAIL');
+            console.log('------------- user', user);
             throw new UnauthorizedException();
         }
 
