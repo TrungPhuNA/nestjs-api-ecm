@@ -9,6 +9,7 @@ import { UploadModule } from './upload/upload.module';
 import * as Joi from '@hapi/joi';
 import { ExceptionsLoggerFilter } from "./utils/exceptionsLogger.filter";
 import { APP_FILTER } from "@nestjs/core";
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
     imports: [
@@ -27,7 +28,8 @@ import { APP_FILTER } from "@nestjs/core";
             }),
         }),
         AuthModule,
-        UploadModule
+        UploadModule,
+        PaymentModule
     ],
     controllers: [AppController],
     providers: [
