@@ -6,6 +6,14 @@ class StoreTransactionDto {
     @IsNotEmpty()
     t_note: string;
 
+    @IsString()
+    @IsNotEmpty()
+    t_name: string;
+
+    @IsString()
+    @IsNotEmpty()
+    t_phone: string;
+
     @IsNumber()
     @IsNotEmpty()
     t_total_money:  number | 0;

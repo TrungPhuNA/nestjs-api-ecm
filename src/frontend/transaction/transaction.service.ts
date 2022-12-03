@@ -55,6 +55,8 @@ export class TransactionService {
         newTransaction.t_total_money = total_price;
         newTransaction.t_total_discount = total_discount;
         newTransaction.t_user_id = userID;
+        newTransaction.t_name = transactionDto.name;
+        newTransaction.t_phone = transactionDto.phone;
         newTransaction.t_note = transactionDto.note;
 
         const transaction = await this.storeTransaction(newTransaction);

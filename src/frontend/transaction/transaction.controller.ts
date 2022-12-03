@@ -53,8 +53,6 @@ export class TransactionController {
             console.log('----------ERROR: TransactionController@create => ', e);
             return new ResponseData(HttpStatus.INTERNAL_SERVER_ERROR, e.response,'error');
         }
-
-
     }
 
     @Put('update/:id')
