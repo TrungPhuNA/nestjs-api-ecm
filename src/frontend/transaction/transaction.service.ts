@@ -47,7 +47,7 @@ export class TransactionService {
             if (!product) {
                 throw new HttpException(`Sản phẩm có mã ${item.id} không tồn tại`, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            total_price += item.total_price;
+            total_price += item.total_price * item.quantity;
         }
 
         let newTransaction = new StoreTransactionDto();
