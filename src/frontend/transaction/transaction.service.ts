@@ -58,6 +58,7 @@ export class TransactionService {
         newTransaction.t_name = transactionDto.name;
         newTransaction.t_phone = transactionDto.phone;
         newTransaction.t_note = transactionDto.note;
+        newTransaction.created_at = new Date();
 
         const transaction = await this.storeTransaction(newTransaction);
         if (transaction) {

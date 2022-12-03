@@ -25,6 +25,9 @@ class StoreTransactionDto {
     @IsNumber()
     @IsNotEmpty()
     t_total_discount:  number | 0;
+
+    created_at?: Date = new Date();
+    updated_at?: Date = new Date();
 }
 
 export default StoreTransactionDto;
