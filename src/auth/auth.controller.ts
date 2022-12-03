@@ -36,8 +36,9 @@ export class AuthController {
         try{
             const data = await this.authService.login(req.user);
             return new ResponseData(HttpStatus.OK, data);
-        }catch (e) {
-            console.log('------------ E: ', e);
+        }catch (error) {
+            console.log('------------ E: ', error);
+            return new ResponseData(error.status, error.response,'error');
         }
     }
 
