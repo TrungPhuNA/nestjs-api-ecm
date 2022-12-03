@@ -50,7 +50,6 @@ export class TransactionService {
             total_price += item.total_price;
         }
 
-
         let newTransaction = new StoreTransactionDto();
         newTransaction.t_total_money = total_price;
         newTransaction.t_total_discount = total_discount;
@@ -59,7 +58,7 @@ export class TransactionService {
         newTransaction.t_phone = transactionDto.phone;
         newTransaction.t_note = transactionDto.note;
         newTransaction.created_at = new Date();
-
+        console.log('------------ newTransaction: ', newTransaction);
         const transaction = await this.storeTransaction(newTransaction);
         if (transaction) {
             for(let i = 0 ; i < products.length ; i ++) {
