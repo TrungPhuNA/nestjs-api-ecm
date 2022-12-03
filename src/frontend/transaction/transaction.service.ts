@@ -40,7 +40,9 @@ export class TransactionService {
         let products: any = transactionDto.products;
         let total_price = 0;
         let total_discount = 0;
-
+        if (products.length == 0) {
+            throw new HttpException(`Không có sản phẩm nào trong giỏ hàng`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         for(let i = 0 ; i < products.length ; i ++) {
             let item = products[i];
             let product = await this.productService.show(item.id);
