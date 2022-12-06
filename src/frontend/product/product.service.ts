@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from "@nestjs/typeorm";
 import ProductEntity from "../../entities/product.entity";
 import { Repository } from "typeorm";
+import { Raw } from "typeorm/browser";
 
 @Injectable()
 export class ProductService {
@@ -15,6 +16,9 @@ export class ProductService {
         if (filters.hot) condition.c_hot = filters.pro_hot;
         if (filters.status) condition.c_status = filters.pro_status;
         if (filters.category_id) condition.pro_category_id = filters.category_id;
+        if (filters.name) {
+            condition.pro_name = Raw(alias => `${alias} ILIKE '%${filters.name}%'`);
+        }
 
         let order: any = { id: "DESC"};
 

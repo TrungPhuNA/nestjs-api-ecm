@@ -25,6 +25,7 @@ export class ProductController {
             hot : req.query.hot || "",
             status : req.query.status || "",
             sort: req.query.sort || "",
+            name: req.query.name || "",
             category_id: req.query.category_id || "",
         }
 
