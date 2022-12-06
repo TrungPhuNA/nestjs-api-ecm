@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from "@nestjs/typeorm";
 import ProductEntity from "../../entities/product.entity";
-import { Repository, Raw } from "typeorm";
+import { Repository, Raw, Like } from "typeorm";
 
 @Injectable()
 export class ProductService {
@@ -16,7 +16,7 @@ export class ProductService {
         if (filters.status) condition.c_status = filters.pro_status;
         if (filters.category_id) condition.pro_category_id = filters.category_id;
         if (filters.name) {
-            condition.pro_name = Raw(alias => `${alias} ILIKE '%${filters.name}%'`);
+            condition.pro_name = Like(`%${filters.name}%`);
         }
 
         let order: any = { id: "DESC"};
@@ -31,7 +31,7 @@ export class ProductService {
                 }
             }
         }
-
+        console.log('------------- condition: ', condition);
         return await this.productRepository.findAndCount({
             where: condition,
             order: order,
