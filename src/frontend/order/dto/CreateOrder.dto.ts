@@ -29,6 +29,7 @@ class CreateOrderDto {
     @IsNotEmpty()
     od_total_price:  number | 0;
 
+    created_at?: Date = new Date();
 }
 
 export default CreateOrderDto;
