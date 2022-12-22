@@ -48,7 +48,7 @@ class Product {
     category: Category
 
     @ManyToOne(() => Order, (order) => order.products)
-    @JoinColumn({ name: "od_product_id", referencedColumnName: "id"})
+    @JoinColumn({ name: "id", referencedColumnName: "od_product_id"})
     order: Order
 }
 
