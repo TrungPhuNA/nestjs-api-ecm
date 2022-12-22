@@ -30,6 +30,11 @@ export class TransactionService {
         return await this.transactionRepository.findAndCount({
             where: condition,
             order: order,
+            relations: {
+                orders : {
+                    products: true
+                }
+            },
             take: paging.page_size,
             skip: (paging.page - 1) * paging.page_size
         });
