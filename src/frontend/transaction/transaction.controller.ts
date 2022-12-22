@@ -70,8 +70,13 @@ export class TransactionController {
 
     @Delete('delete/:id')
     @UseGuards(JwtAuthGuard)
-    async delete()
+    async delete(
+        @Req() req: Request,
+        @Param('id') id: number
+    )
     {
-
+        const user: any  = req.user;
+        const data = await this.transactionService.deleteTransaction(parseInt(user.id), id);
+        return new ResponseData(HttpStatus.OK, data);
     }
 }

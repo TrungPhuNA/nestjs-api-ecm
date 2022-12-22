@@ -141,4 +141,9 @@ export class TransactionService {
             where:{ id }
         });
     }
+
+    async deleteTransaction(user_id: number, id: number)
+    {
+        await this.transactionRepository.delete(id);
+    }
 }
