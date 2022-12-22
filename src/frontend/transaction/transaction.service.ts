@@ -146,4 +146,12 @@ export class TransactionService {
     {
         await this.transactionRepository.delete(id);
     }
+
+    async show(id: number)
+    {
+        return await this.transactionRepository.findOne({
+            where:{ id },
+            relations: {orders : true},
+        });
+    }
 }

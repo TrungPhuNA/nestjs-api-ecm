@@ -1,4 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import Product from "./product.entity";
+import Category from "./category.entity";
+import Transaction from "./transaction.entity";
 
 @Entity('orders')
 class Order {
@@ -25,6 +28,14 @@ class Order {
 
     @Column()
     public od_total_price: number;
+
+    @OneToMany(() => Product, (product) => product.order)
+    @JoinColumn({ name: "id", referencedColumnName: "od_product_id"})
+    products: Product[]
+
+    @ManyToOne(() => Transaction, (transaction) => transaction.orders)
+    @JoinColumn({ name: "od_transaction_id", referencedColumnName: "id"})
+    transaction: Transaction
 }
 
 export default Order;

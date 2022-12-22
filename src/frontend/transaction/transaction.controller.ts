@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Req, UseGuards } from "@nestjs/common";
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    HttpStatus,
+    Param,
+    ParseIntPipe,
+    Post,
+    Put,
+    Req,
+    UseGuards
+} from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import CreateTransactionDto from "./dto/CreateTransaction.dto";
 import { TransactionService } from "./transaction.service";
@@ -78,5 +90,19 @@ export class TransactionController {
         const user: any  = req.user;
         const data = await this.transactionService.deleteTransaction(parseInt(user.id), id);
         return new ResponseData(HttpStatus.OK, data);
+    }
+
+    @Get('show/:id')
+    async show(
+        @Param('id', ParseIntPipe) id: number
+    )
+    {
+        try{
+            const data = await this.transactionService.show(id);
+            return new ResponseData(HttpStatus.OK, data);
+        }catch (e) {
+            console.log('----------ERROR: TransactionController@show => ', e);
+            return new ResponseData(HttpStatus.INTERNAL_SERVER_ERROR, e.response,'error');
+        }
     }
 }

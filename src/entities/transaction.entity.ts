@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import Product from "./product.entity";
+import Order from "./order.entity";
 
 @Entity('transactions')
 class Transaction {
@@ -25,6 +27,10 @@ class Transaction {
 
     @Column()
     public created_at: Date;
+
+    @OneToMany(() => Order, (order) => order.transaction)
+    @JoinColumn({ name: "id", referencedColumnName: "od_transaction_id"})
+    orders: Order[]
 }
 
 export default Transaction;

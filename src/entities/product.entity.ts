@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import Category from "./category.entity";
+import Order from "./order.entity";
 
 @Entity('products')
 class Product {
@@ -45,6 +46,10 @@ class Product {
     @ManyToOne(() => Category, (category) => category.products)
     @JoinColumn({ name: "pro_category_id", referencedColumnName: "id"})
     category: Category
+
+    @ManyToOne(() => Order, (order) => order.products)
+    @JoinColumn({ name: "od_product_id", referencedColumnName: "id"})
+    order: Order
 }
 
 export default Product;
