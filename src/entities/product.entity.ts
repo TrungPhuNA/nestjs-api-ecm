@@ -43,6 +43,12 @@ class Product {
     @Column()
     public pro_sale: number;
 
+    @Column()
+    public created_at: Date;
+
+    @Column()
+    public updated_at: Date;
+
     @ManyToOne(() => Category, (category) => category.products)
     @JoinColumn({ name: "pro_category_id", referencedColumnName: "id"})
     category: Category

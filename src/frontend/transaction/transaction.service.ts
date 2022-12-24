@@ -25,8 +25,15 @@ export class TransactionService {
     {
         let condition: any = {};
 
+        if (filters.status)
+            condition.t_status = filters.status;
+
+        if (filters.user_id)
+            condition.t_user_id = filters.user_id;
+
         let order: any = { id: "DESC"};
 
+        console.log('------------- filters: ', filters);
         return await this.transactionRepository.findAndCount({
             where: condition,
             order: order,

@@ -29,6 +29,12 @@ class Order {
     @Column()
     public od_total_price: number;
 
+    @Column()
+    public created_at: Date;
+
+    @Column()
+    public updated_at: Date;
+
     @OneToMany(() => Product, (product) => product.order)
     @JoinColumn({ name: "id", referencedColumnName: "od_product_id"})
     products: Product[]

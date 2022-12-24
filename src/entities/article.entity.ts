@@ -31,6 +31,12 @@ class Article {
 
     @Column()
     public a_active: number;
+
+    @Column()
+    public created_at: Date;
+
+    @Column()
+    public updated_at: Date;
 }
 
 export default Article;

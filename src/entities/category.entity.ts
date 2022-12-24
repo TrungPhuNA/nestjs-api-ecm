@@ -30,6 +30,12 @@ class Category {
     @OneToMany(() => Product, (product) => product.category)
     @JoinColumn({ name: "id", referencedColumnName: "pro_category_id"})
     products: Product[]
+
+    @Column()
+    public created_at: Date;
+
+    @Column()
+    public updated_at: Date;
 }
 
 export default Category;

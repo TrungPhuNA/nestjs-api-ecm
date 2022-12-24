@@ -26,6 +26,9 @@ class Transaction {
     public t_total_discount: number;
 
     @Column()
+    public t_status: number;
+
+    @Column()
     public created_at: Date;
 
     @OneToMany(() => Order, (order) => order.transaction)

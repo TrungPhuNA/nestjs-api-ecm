@@ -1,30 +1,24 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('slides')
-class Slide {
+@Entity('votes')
+class Vote {
     @PrimaryGeneratedColumn()
     public id: number;
 
     @Column()
-    public s_title: string;
+    public v_content: string;
 
     @Column()
-    public s_description: string;
+    public v_user_id: number;
 
     @Column()
-    public s_link: string;
+    public v_product_id: number;
 
     @Column()
-    public s_text: string;
+    public v_number: number;
 
     @Column()
-    public s_banner: string;
-
-    @Column()
-    public s_sort: number;
-
-    @Column()
-    public s_status: number;
+    public v_status: number;
 
     @Column()
     public created_at: Date;
@@ -33,4 +27,4 @@ class Slide {
     public updated_at: Date;
 }
 
-export default Slide;
+export default Vote;

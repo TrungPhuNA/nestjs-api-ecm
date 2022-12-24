@@ -25,6 +25,12 @@ class Menu {
 
     @Column()
     public mn_status: number;
+
+    @Column()
+    public created_at: Date;
+
+    @Column()
+    public updated_at: Date;
 }
 
 export default Menu;

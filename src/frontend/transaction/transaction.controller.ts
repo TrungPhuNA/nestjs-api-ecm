@@ -27,6 +27,7 @@ export class TransactionController {
         private transactionService : TransactionService
     ) {}
 
+    @UseGuards(JwtAuthGuard)
     @Get('lists')
     async getListsTransaction(
         @Req() req: Request
@@ -36,12 +37,14 @@ export class TransactionController {
             page: req.query.page || 1,
             page_size: req.query.page_size || 10,
         }
-
+        console.log('----------- req.user: ', req.user);
+        const user: any  = req.user;
         const filters = {
             hot : req.query.hot || "",
             status : req.query.status || "",
             sort: req.query.sort || "",
             category_id: req.query.category_id || "",
+            user_id : user.id
         }
 
         const response = await this.transactionService.getListsTransaction(paging, filters);

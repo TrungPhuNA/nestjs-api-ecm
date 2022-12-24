@@ -31,6 +31,12 @@ class User {
 
     @Column()
     public refresh_token: string;
+
+    @Column()
+    public created_at: Date;
+
+    @Column()
+    public updated_at: Date;
 }
 
 export default User;
