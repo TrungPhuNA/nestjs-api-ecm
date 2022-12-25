@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import Category from "./category.entity";
+import Product from "./product.entity";
 
 @Entity('votes')
 class Vote {
@@ -25,6 +27,10 @@ class Vote {
 
     @Column()
     public updated_at: Date;
+
+    @ManyToOne(() => Product, (product) => product.votes)
+    @JoinColumn({ name: "v_product_id", referencedColumnName: "id"})
+    product: Product
 }
 
 export default Vote;

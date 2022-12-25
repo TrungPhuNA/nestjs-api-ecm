@@ -1,4 +1,16 @@
-import { Body, Controller, Get, HttpStatus, Param, ParseIntPipe, Post, Put, Request, UseGuards } from "@nestjs/common";
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    HttpStatus,
+    Param,
+    ParseIntPipe,
+    Post,
+    Put,
+    Request,
+    UseGuards
+} from "@nestjs/common";
 import { JwtAuthGuard } from "../../auth/jwt-auth.guard";
 import { ResponseData } from "../../common/response/ResponseData";
 import { ApiTags } from "@nestjs/swagger";
@@ -35,15 +47,20 @@ export class VoteController {
     }
 
     @Post('store')
+    @UseGuards(JwtAuthGuard)
     async store(
-        @Body() voteDto: CreateVoteDto
+        @Body() voteDto: CreateVoteDto,
+        @Request() req,
     )
     {
+        const { id, user } = req.user;
+        voteDto.v_user_id = id;
         const data = await this.voteService.store(voteDto);
         return new ResponseData(200, data);
     }
 
     @Get('show/:id')
+    @UseGuards(JwtAuthGuard)
     async show(
         @Param('id', ParseIntPipe) id: number
     )
@@ -53,12 +70,29 @@ export class VoteController {
     }
 
     @Put('update/:id')
+    @UseGuards(JwtAuthGuard)
     async update(
         @Body() voteDto: UpdateVoteDto,
-        @Param('id') id: number
+        @Param('id') id: number,
+        @Request() req,
     )
     {
+        const { user_id, user } = req.user;
+        voteDto.v_user_id = id;
         const response = await this.voteService.update(id, voteDto);
+        return new ResponseData(200, response);
+    }
+
+    @Delete('delete/:id')
+    @UseGuards(JwtAuthGuard)
+    async delete(
+        @Body() voteDto: UpdateVoteDto,
+        @Param('id') id: number,
+        @Request() req,
+    )
+    {
+        const { user_id, user } = req.user;
+        const response = await this.voteService.delete(id, parseInt(user_id));
         return new ResponseData(200, response);
     }
 }

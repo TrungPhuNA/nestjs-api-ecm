@@ -13,12 +13,11 @@ class CreateVoteDto {
     @IsNumber()
     v_product_id: number | 0;
 
-    @IsString()
-    @IsNotEmpty()
-    a_content: string;
-
     v_user_id?: number | 0;
     v_status?: number | 1;
+
+    created_at?: Date = new Date();
+    updated_at?: Date = new Date();
 }
 
 export default CreateVoteDto;
