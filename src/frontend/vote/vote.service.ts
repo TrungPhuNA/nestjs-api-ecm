@@ -48,6 +48,7 @@ export class VoteService {
         }
         voteDto.created_at = new Date();
         const newData = await this.voteRepository.create(voteDto);
+        this.productService.incrementProduction(voteDto.v_product_id, voteDto.v_number);
         return await this.voteRepository.save(newData);
     }
 
@@ -66,6 +67,7 @@ export class VoteService {
         if (!product) {
             throw new HttpException(`Sản phẩm có mã ${voteDto.v_product_id} không tồn tại`, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        delete voteDto.v_number;
         voteDto.updated_at = new Date();
         await this.voteRepository.update(id, voteDto);
         return await this.show(id);
@@ -73,6 +75,9 @@ export class VoteService {
 
     async delete(id : number, user_id: number)
     {
+        const vote = await this.show(id);
+        this.productService.decrementProduction(vote.v_product_id, vote.v_number);
+
         await this.voteRepository.delete(id);
     }
 }

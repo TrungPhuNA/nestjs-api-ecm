@@ -45,6 +45,12 @@ class Product {
     public pro_sale: number;
 
     @Column()
+    public pro_review_total: number;
+
+    @Column()
+    public pro_review_star: number;
+
+    @Column()
     public created_at: Date;
 
     @Column()
