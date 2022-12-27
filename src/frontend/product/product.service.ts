@@ -17,6 +17,7 @@ export class ProductService {
         if (filters.category_id) condition.pro_category_id = filters.category_id;
         if (filters.name) {
             condition.pro_name = Like(`%${filters.name}%`);
+            condition.pro_slug = Like(`%${filters.name}%`);
         }
 
         let order: any = { id: "DESC"};
