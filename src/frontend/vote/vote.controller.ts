@@ -25,13 +25,11 @@ export class VoteController {
     constructor(private voteService: VoteService) {
     }
 
-    @UseGuards(JwtAuthGuard)
     @Get('lists')
     async getListsVote(
         @Request() req,
     )
     {
-        const { id, user } = req.user;
         const filters = {
             status : req.query.status || "",
             sort: req.query.sort || "",
@@ -39,7 +37,7 @@ export class VoteController {
             page_size: req.query.page_size || 10,
         }
 
-        const response = await this.voteService.getListsVote(id, filters);
+        const response = await this.voteService.getListsVote(filters);
         const [data, total] = response;
         const pagingData = new Paging(Number(filters.page), Number(filters.page_size), total);
 

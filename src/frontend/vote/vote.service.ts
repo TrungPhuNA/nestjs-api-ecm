@@ -16,7 +16,7 @@ export class VoteService {
     ) {
     }
 
-    async getListsVote(user_id: number, filters: any)
+    async getListsVote(filters: any)
     {
         let condition: any = {};
 
