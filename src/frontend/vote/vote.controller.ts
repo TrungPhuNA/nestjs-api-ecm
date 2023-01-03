@@ -34,6 +34,7 @@ export class VoteController {
             status : req.query.status || "",
             sort: req.query.sort || "",
             page: req.query.page || 1,
+            number: req.query.number || "",
             page_size: req.query.page_size || 10,
         }
 

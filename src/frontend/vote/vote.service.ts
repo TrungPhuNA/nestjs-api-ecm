@@ -26,6 +26,9 @@ export class VoteService {
         if (filters.user_id)
             condition.t_user_id = filters.user_id;
 
+        if (filters.number)
+            condition.v_number = filters.number;
+
         let order: any = { id: "DESC"};
 
         console.log('------------- filters: ', filters);
