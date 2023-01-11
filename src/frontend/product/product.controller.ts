@@ -27,6 +27,7 @@ export class ProductController {
             sort: req.query.sort || "",
             name: req.query.name || "",
             category_id: req.query.category_id || "",
+            sale: req.query.sale || ""
         }
 
         const response = await this.productService.getListsProducts(paging, filters);
