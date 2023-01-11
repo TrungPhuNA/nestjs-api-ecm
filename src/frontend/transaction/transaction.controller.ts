@@ -108,4 +108,31 @@ export class TransactionController {
             return new ResponseData(HttpStatus.INTERNAL_SERVER_ERROR, e.response,'error');
         }
     }
+
+    @Get('config')
+    async getConfig()
+    {
+        try{
+            const data = {
+                "status" : [
+                    {
+                        'value' : 1,
+                        'name' : 'Khởi tạo'
+                    },
+                    {
+                        'value' : 2,
+                        'name' : 'Chờ xử lý'
+                    },
+                    {
+                        'value' : 3,
+                        'name' : 'Chờ lấy hàng'
+                    },
+                ]
+            }
+            return new ResponseData(HttpStatus.OK, data);
+        }catch (e) {
+            console.log('----------ERROR: TransactionController@getConfig => ', e);
+            return new ResponseData(HttpStatus.INTERNAL_SERVER_ERROR, e.response,'error');
+        }
+    }
 }
