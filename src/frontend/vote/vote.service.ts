@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { In, Repository } from "typeorm";
 import VoteEntity from "../../entities/vote.entity";
 import CreateVoteDto from "./dto/CreateVote.dto";
 import UpdateVoteDto from "./dto/UpdateVote.dto";
@@ -27,11 +27,14 @@ export class VoteService {
             condition.t_user_id = filters.user_id;
 
         if (filters.number)
-            condition.v_number = filters.number;
+        {
+            let number = filters.number.split(',');
+            condition.v_number = In(number);
+        }
 
         let order: any = { id: "DESC"};
 
-        console.log('------------- filters: ', filters);
+        console.log('------------- condition: ', condition);
         return await this.voteRepository.findAndCount({
             where: condition,
             order: order,
