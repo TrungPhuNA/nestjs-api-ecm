@@ -26,6 +26,9 @@ export class VoteService {
         if (filters.user_id)
             condition.t_user_id = filters.user_id;
 
+        if (filters.product_id)
+            condition.v_product_id = filters.product_id;
+
         if (filters.number)
         {
             let number = filters.number.split(',');
@@ -34,12 +37,12 @@ export class VoteService {
 
         let order: any = { id: "DESC"};
 
-        console.log('------------- condition: ', condition);
         return await this.voteRepository.findAndCount({
             where: condition,
             order: order,
             relations: {
-                product: true
+                product: true,
+                user: true
             },
             take: filters.page_size,
             skip: (filters.page - 1) * filters.page_size

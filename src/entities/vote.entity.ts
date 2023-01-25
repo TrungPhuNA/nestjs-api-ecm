@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import Category from "./category.entity";
 import Product from "./product.entity";
+import User from "./user.entity";
 
 @Entity('votes')
 class Vote {
@@ -31,6 +32,10 @@ class Vote {
     @ManyToOne(() => Product, (product) => product.votes)
     @JoinColumn({ name: "v_product_id", referencedColumnName: "id"})
     product: Product
+
+    @ManyToOne(() => User, (user) => user.votes)
+    @JoinColumn({ name: "v_user_id", referencedColumnName: "id"})
+    user: User
 }
 
 export default Vote;
