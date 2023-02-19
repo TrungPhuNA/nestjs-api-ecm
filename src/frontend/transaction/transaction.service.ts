@@ -116,17 +116,18 @@ export class TransactionService {
         let currCode = 'VND';
         let vnp_Params = {};
         vnp_Params['vnp_Version'] = '2.1.0';
-        vnp_Params['vnp_Command'] = 'pay';
         vnp_Params['vnp_TmnCode'] = tmnCode;
-        vnp_Params['vnp_Locale'] = 'vn';
-        vnp_Params['vnp_CurrCode'] = currCode;
-        vnp_Params['vnp_TxnRef'] = orderId;
-        vnp_Params['vnp_OrderInfo'] = 'Thanh toán';
-        vnp_Params['vnp_OrderType'] = 'other';
         vnp_Params['vnp_Amount'] = amount * 100;
-        vnp_Params['vnp_ReturnUrl'] = returnUrl;
-        vnp_Params['vnp_IpAddr'] = ip;
+        vnp_Params['vnp_Command'] = 'pay';
         vnp_Params['vnp_CreateDate'] = createDate;
+        vnp_Params['vnp_CurrCode'] = currCode;
+        vnp_Params['vnp_IpAddr'] = ip;
+        vnp_Params['vnp_Locale'] = 'vn';
+        vnp_Params['vnp_OrderInfo'] = 'Thanh toán online đơn hàng';
+        vnp_Params['vnp_OrderType'] = 'other';
+        vnp_Params['vnp_ReturnUrl'] = returnUrl;
+        vnp_Params['vnp_TxnRef'] = orderId;
+
 
         vnp_Params = sortObj(vnp_Params);
         console.log('-------------- vnp_Params: ', vnp_Params);
