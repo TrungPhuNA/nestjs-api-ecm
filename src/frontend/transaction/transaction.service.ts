@@ -102,8 +102,11 @@ export class TransactionService {
 
     async storeVnPay(transaction: any)
     {
-        var tmnCode = '3RDGQAX3';
-        var secretKey = 'PMSBQTYJIQLJILQTWHKAESOMMTXYHFHE';
+        // var tmnCode = '3RDGQAX3';
+        // var secretKey = 'PMSBQTYJIQLJILQTWHKAESOMMTXYHFHE';
+
+        var tmnCode = 'FKBRDBWJ';
+        var secretKey = 'ZJVKCGVAJZETUKIJLDDJBLZCLFOXRDJE';
         var vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
         var returnUrl = 'http://reactjs.123code.net';
 
