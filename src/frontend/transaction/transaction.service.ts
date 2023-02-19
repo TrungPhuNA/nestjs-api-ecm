@@ -12,7 +12,7 @@ import UpdateOrderDto from "../order/dto/UpdateOrder.dto";
 import * as moment from 'moment';
 import * as querystring from 'querystring';
 var sortObj = require('sort-object');
-var ip = require('ip');
+import * as ip from "ip";
 
 @Injectable()
 export class TransactionService {
@@ -95,12 +95,12 @@ export class TransactionService {
             }
         }
 
-        let link =  await this.storeVnPay(transaction, ip);
+        let link =  await this.storeVnPay(transaction);
 
         return [transaction, link];
     }
 
-    async storeVnPay(transaction: any, ip: any)
+    async storeVnPay(transaction: any)
     {
         var tmnCode = '3RDGQAX3';
         var secretKey = 'PMSBQTYJIQLJILQTWHKAESOMMTXYHFHE';
@@ -114,6 +114,7 @@ export class TransactionService {
         let orderId = transaction.id;
         let amount = transaction.t_total_money;
 
+        console.log("----------------- IP: ", ip.address());
         let currCode = 'VND';
         let vnp_Params = {};
         vnp_Params['vnp_Version'] = '2.1.0';
