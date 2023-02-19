@@ -113,7 +113,10 @@ export class TransactionService {
         var date = new Date();
 
         let createDate = moment(date).format("YYYYMMDDHHmmss");
-        let expireDate = moment(date).subtract(1, 'day').format("YYYYMMDDHHmmss");
+        let expireDate = moment(date).subtract(5, 'day');
+        console.log('-------------createDate', moment(date));
+        console.log('-------------expireDate', expireDate);
+        // let expireDate = moment(date).subtract(1, 'day').format("YYYYMMDDHHmmss");
         console.log('------------ createDate', createDate);
         let orderId = transaction.id;
         let amount = transaction.t_total_money;
@@ -133,7 +136,7 @@ export class TransactionService {
         vnp_Params['vnp_OrderType'] = 'other';
         vnp_Params['vnp_ReturnUrl'] = returnUrl;
         vnp_Params['vnp_TxnRef'] = orderId;
-        // vnp_Params['vnp_ExpireDate'] = expireDate;
+        vnp_Params['vnp_ExpireDate'] = expireDate;
 
 
         vnp_Params = sortObj(vnp_Params);
