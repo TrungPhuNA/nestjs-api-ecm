@@ -104,7 +104,8 @@ export class TransactionService {
     {
         var tmnCode = '3RDGQAX3';
         var secretKey = 'PMSBQTYJIQLJILQTWHKAESOMMTXYHFHE';
-        var vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
+        // var vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
+        var vnpUrl = 'http://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
         var returnUrl = 'http://reactjs.123code.net';
 
         var date = new Date();
