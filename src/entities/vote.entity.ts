@@ -1,7 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import Category from "./category.entity";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import Product from "./product.entity";
 import User from "./user.entity";
+import Comment from "./comment.entity";
 
 @Entity('votes')
 class Vote {
@@ -36,6 +36,10 @@ class Vote {
     @ManyToOne(() => User, (user) => user.votes)
     @JoinColumn({ name: "v_user_id", referencedColumnName: "id"})
     user: User
+
+    @OneToMany(() => Comment, (comment) => comment.vote)
+    @JoinColumn({ name: "id", referencedColumnName: "c_vote_id"})
+    comments: Comment[]
 }
 
 export default Vote;

@@ -42,7 +42,8 @@ export class VoteService {
             order: order,
             relations: {
                 product: true,
-                user: true
+                user: true,
+                comments:  true
             },
             take: filters.page_size,
             skip: (filters.page - 1) * filters.page_size
