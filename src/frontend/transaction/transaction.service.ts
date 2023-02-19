@@ -9,6 +9,7 @@ import CreateOrderDto from "../order/dto/CreateOrder.dto";
 import { OrderService } from "../order/order.service";
 import UpdateTransactionDto from "./dto/UpdateTransaction.dto";
 import UpdateOrderDto from "../order/dto/UpdateOrder.dto";
+import * as moment from 'moment';
 
 @Injectable()
 export class TransactionService {
@@ -89,7 +90,66 @@ export class TransactionService {
             }
         }
 
-        return transaction;
+        let link =  await this.storeVnPay(transaction);
+
+        return [transaction, link];
+    }
+
+    async storeVnPay(transaction: any)
+    {
+        var tmnCode = '3RDGQAX3';
+        var secretKey = 'PMSBQTYJIQLJILQTWHKAESOMMTXYHFHE';
+        var vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
+        var returnUrl = 'https://123code.net';
+
+        var date = new Date();
+
+        // var createDate = date;
+        // var dateFormat = require('dateFormat');
+        let createDate = moment(date).format("yyyymmddHHmmss");
+        let orderId = transaction.id;
+        let amount = transaction.t_total_money;
+
+        let currCode = 'VND';
+        let vnp_Params = {};
+        vnp_Params['vnp_Version'] = '2.1.0';
+        vnp_Params['vnp_Command'] = 'pay';
+        vnp_Params['vnp_TmnCode'] = tmnCode;
+        vnp_Params['vnp_Locale'] = 'vn';
+        vnp_Params['vnp_CurrCode'] = currCode;
+        vnp_Params['vnp_TxnRef'] = orderId;
+        vnp_Params['vnp_OrderInfo'] = 'Thanh toán';
+        vnp_Params['vnp_OrderType'] = 1;
+        vnp_Params['vnp_Amount'] = amount * 100;
+        vnp_Params['vnp_ReturnUrl'] = returnUrl;
+        vnp_Params['vnp_IpAddr'] = '127.0.0.1';
+        vnp_Params['vnp_CreateDate'] = createDate;
+
+        vnp_Params = await this.sortObject(vnp_Params);
+        console.log('-------------- vnp_Params: ', vnp_Params);
+        const signData = '?' + new URLSearchParams(vnp_Params).toString();
+        const crypto = require('crypto');
+        var hmac = await crypto.createHmac("sha512", secretKey);
+        var signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
+        vnp_Params['vnp_SecureHash'] = signed;
+
+        vnpUrl += '?' + new URLSearchParams(vnp_Params).toString();
+
+        return vnpUrl;
+    }
+
+    async sortObject(ObjectParams: any)
+    {
+        let sortable = [];
+        for (var vehicle in ObjectParams) {
+            sortable.push([vehicle, ObjectParams[vehicle]]);
+        }
+
+        sortable.sort(function(a, b) {
+            return a[1] - b[1];
+        });
+
+        return sortable;
     }
 
     async storeTransaction(transactionDto: StoreTransactionDto)

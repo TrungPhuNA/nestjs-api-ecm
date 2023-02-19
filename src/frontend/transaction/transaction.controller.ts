@@ -63,7 +63,11 @@ export class TransactionController {
         try{
             const user: any  = req.user;
             const data = await this.transactionService.create(formData, parseInt(user.id));
-            return new ResponseData(HttpStatus.OK, data, 'success' );
+            const [transaction, link] = data;
+            return new ResponseData(HttpStatus.OK, {
+                'transaction' : transaction,
+                'link' : link
+            }, 'success' );
         }catch (e) {
             console.log('----------ERROR: TransactionController@create => ', e);
             return new ResponseData(HttpStatus.INTERNAL_SERVER_ERROR, e.response,'error');
