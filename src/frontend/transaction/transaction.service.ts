@@ -114,9 +114,9 @@ export class TransactionService {
 
         var date = new Date();
 
-        let createDate = moment(date).format("yyyymmddHHmmss");
+        let createDate = moment(date).format("YmdHis");
         // let createDate = moment(date).format("YYYYMMDDHHmmss");
-        let expireDate = moment(date).add(20, 'minutes').format("yyyymmddHHmmss");
+        let expireDate = moment(date).add(20, 'minutes').format("YmdHis");
         console.log('-------------createDate', moment(date));
         console.log('-------------expireDate', expireDate);
         // let expireDate = moment(date).subtract(1, 'day').format("YYYYMMDDHHmmss");
