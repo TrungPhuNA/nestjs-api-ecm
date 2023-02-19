@@ -10,6 +10,7 @@ import { OrderService } from "../order/order.service";
 import UpdateTransactionDto from "./dto/UpdateTransaction.dto";
 import UpdateOrderDto from "../order/dto/UpdateOrder.dto";
 import * as moment from 'moment';
+import { RealIP } from 'nestjs-real-ip';
 
 @Injectable()
 export class TransactionService {
@@ -121,7 +122,7 @@ export class TransactionService {
         vnp_Params['vnp_OrderType'] = 'other';
         vnp_Params['vnp_Amount'] = amount * 100;
         vnp_Params['vnp_ReturnUrl'] = returnUrl;
-        vnp_Params['vnp_IpAddr'] = req.ip;
+        vnp_Params['vnp_IpAddr'] = RealIP;
         vnp_Params['vnp_CreateDate'] = createDate;
 
         vnp_Params = await this.sortObject(vnp_Params);
