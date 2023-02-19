@@ -122,7 +122,6 @@ export class TransactionService {
         let orderId = transaction.id;
         let amount = transaction.t_total_money;
 
-        console.log("----------------- IP: ", ip.address());
         let currCode = 'VND';
         let vnp_Params = {};
         vnp_Params['vnp_Version'] = '2.1.0';
