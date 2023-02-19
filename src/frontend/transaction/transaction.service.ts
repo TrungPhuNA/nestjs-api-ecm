@@ -12,6 +12,7 @@ import UpdateOrderDto from "../order/dto/UpdateOrder.dto";
 import * as moment from 'moment';
 import * as querystring from 'querystring';
 var sortObj = require('sort-object');
+var ip = require('ip');
 
 @Injectable()
 export class TransactionService {
@@ -121,7 +122,7 @@ export class TransactionService {
         vnp_Params['vnp_Command'] = 'pay';
         vnp_Params['vnp_CreateDate'] = createDate;
         vnp_Params['vnp_CurrCode'] = currCode;
-        vnp_Params['vnp_IpAddr'] = ip;
+        vnp_Params['vnp_IpAddr'] = ip.address();
         vnp_Params['vnp_Locale'] = 'vn';
         vnp_Params['vnp_OrderInfo'] = 'Thanh toán online đơn hàng';
         vnp_Params['vnp_OrderType'] = 'other';
