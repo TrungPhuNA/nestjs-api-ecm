@@ -104,8 +104,7 @@ export class TransactionService {
     {
         var tmnCode = '3RDGQAX3';
         var secretKey = 'PMSBQTYJIQLJILQTWHKAESOMMTXYHFHE';
-        // var vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
-        var vnpUrl = 'http://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
+        var vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
         var returnUrl = 'http://reactjs.123code.net';
 
         var date = new Date();
@@ -136,10 +135,15 @@ export class TransactionService {
         console.log('-------------- vnp_Params: ', vnp_Params);
         let signData = '?' + querystring.stringify(vnp_Params);
         const crypto = require('crypto');
-        let hmac = await crypto.createHmac("sha512", secretKey);
+        // let hmac = await crypto.createHmac("sha512", secretKey);
         this.logger.warn(`============= hmac => :  ${hmac} `);
-        hmac.update(JSON.stringify(signData));
-        let hash = hmac.digest('hex');
+
+        var hmac = crypto.createHmac("sha512", secretKey);
+        let hash = hmac.update(Buffer.from(signData, 'utf-8')).digest("hex");
+
+        // hmac.update(JSON.stringify(signData));
+        // let hash = hmac.digest('hex');
+
         this.logger.warn(`============= hash => :  ${hash} `);
         vnp_Params['vnp_SecureHash'] = hash;
         console.log('===================== vnp_Params', vnp_Params);
