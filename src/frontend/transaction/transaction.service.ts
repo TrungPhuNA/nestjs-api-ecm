@@ -13,6 +13,7 @@ import * as moment from 'moment';
 import * as querystring from 'querystring';
 var sortObj = require('sort-object');
 import * as ip from "ip";
+import { urlencoded } from "express";
 
 @Injectable()
 export class TransactionService {
@@ -152,8 +153,8 @@ export class TransactionService {
         console.log('===================== vnp_Params', vnp_Params);
 
         vnpUrl += '?' + querystring.stringify(vnp_Params, null, null);
-        console.log('================== vnpUrl: ', vnpUrl);
-        return vnpUrl;
+        console.log('================== vnpUrl: ', encodeURIComponent(vnpUrl));
+        return encodeURIComponent(vnpUrl);
     }
 
     async storeTransaction(transactionDto: StoreTransactionDto)
