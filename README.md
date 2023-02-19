@@ -68,3 +68,7 @@ Hotline: 1900 55 55 77
 Trân trọng,
 
 *Quý khách vui lòng không trả lời email này*
+
+
+
+"https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Version=2.1.0&vnp_Command=pay&vnp_TmnCode=3RDGQAX3&vnp_Locale=vn&vnp_CurrCode=VND&vnp_TxnRef=124&vnp_OrderInfo=Thanh+to%C3%A1n&vnp_OrderType=other&vnp_Amount=23500000&vnp_ReturnUrl=https%3A%2F%2F123code.net&vnp_IpAddr=%3A%3Affff%3A127.0.0.1&vnp_CreateDate=202314Su121406"

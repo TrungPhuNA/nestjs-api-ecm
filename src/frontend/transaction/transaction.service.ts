@@ -104,7 +104,8 @@ export class TransactionService {
 
         var date = new Date();
 
-        let createDate = moment(date).format("yyyymmddHHmmss");
+        let createDate = moment(date).format("YYYYMMDDHHmmss");
+        console.log('------------ createDate', createDate);
         let orderId = transaction.id;
         let amount = transaction.t_total_money;
 
@@ -123,30 +124,16 @@ export class TransactionService {
         vnp_Params['vnp_IpAddr'] = req.ip;
         vnp_Params['vnp_CreateDate'] = createDate;
 
-        // "vnp_Version" => "2.1.0",
-        // "vnp_TmnCode" => $this->vnp_TmnCode,
-        // "vnp_Amount" => $data["tst_total_money"]* 100,
-        // "vnp_Command" => "pay",
-        // "vnp_CreateDate" => date('YmdHis'),
-        // "vnp_CurrCode" => "VND",
-        // "vnp_IpAddr" => $_SERVER['REMOTE_ADDR'],
-        // "vnp_Locale" => "vn",
-        // "vnp_OrderInfo" => "Thanh toan GD:" . $this->idTransaction,
-        // "vnp_OrderType" => "other",
-        // "vnp_ReturnUrl" => $this->vnp_Returnurl,
-        // "vnp_TxnRef" => $this->idTransaction,
-        // "vnp_ExpireDate"=>$expire
-
         vnp_Params = await this.sortObject(vnp_Params);
         console.log('-------------- vnp_Params: ', vnp_Params);
         const signData = '?' + new URLSearchParams(vnp_Params).toString();
         const crypto = require('crypto');
-        var hmac = await crypto.createHmac("sha512", secretKey);
-        var signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
+        let hmac = await crypto.createHmac("sha512", secretKey);
+        let signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
         vnp_Params['vnp_SecureHash'] = signed;
 
         vnpUrl += '?' + new URLSearchParams(vnp_Params).toString();
-
+        console.log('================== vnpUrl: ', vnpUrl);
         return vnpUrl;
     }
 
