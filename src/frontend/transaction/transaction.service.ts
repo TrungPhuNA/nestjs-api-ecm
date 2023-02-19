@@ -48,7 +48,7 @@ export class TransactionService {
         });
     }
 
-    async create(transactionDto: CreateTransactionDto, userID: number)
+    async create(transactionDto: CreateTransactionDto, userID: number, req: any)
     {
         let products: any = transactionDto.products;
         let total_price = 0;
@@ -90,12 +90,12 @@ export class TransactionService {
             }
         }
 
-        let link =  await this.storeVnPay(transaction);
+        let link =  await this.storeVnPay(transaction, req);
 
         return [transaction, link];
     }
 
-    async storeVnPay(transaction: any)
+    async storeVnPay(transaction: any, req: any)
     {
         var tmnCode = '3RDGQAX3';
         var secretKey = 'PMSBQTYJIQLJILQTWHKAESOMMTXYHFHE';
@@ -104,8 +104,6 @@ export class TransactionService {
 
         var date = new Date();
 
-        // var createDate = date;
-        // var dateFormat = require('dateFormat');
         let createDate = moment(date).format("yyyymmddHHmmss");
         let orderId = transaction.id;
         let amount = transaction.t_total_money;
@@ -119,11 +117,25 @@ export class TransactionService {
         vnp_Params['vnp_CurrCode'] = currCode;
         vnp_Params['vnp_TxnRef'] = orderId;
         vnp_Params['vnp_OrderInfo'] = 'Thanh toán';
-        vnp_Params['vnp_OrderType'] = 1;
+        vnp_Params['vnp_OrderType'] = 'other';
         vnp_Params['vnp_Amount'] = amount * 100;
         vnp_Params['vnp_ReturnUrl'] = returnUrl;
-        vnp_Params['vnp_IpAddr'] = '127.0.0.1';
+        vnp_Params['vnp_IpAddr'] = req.ip;
         vnp_Params['vnp_CreateDate'] = createDate;
+
+        // "vnp_Version" => "2.1.0",
+        // "vnp_TmnCode" => $this->vnp_TmnCode,
+        // "vnp_Amount" => $data["tst_total_money"]* 100,
+        // "vnp_Command" => "pay",
+        // "vnp_CreateDate" => date('YmdHis'),
+        // "vnp_CurrCode" => "VND",
+        // "vnp_IpAddr" => $_SERVER['REMOTE_ADDR'],
+        // "vnp_Locale" => "vn",
+        // "vnp_OrderInfo" => "Thanh toan GD:" . $this->idTransaction,
+        // "vnp_OrderType" => "other",
+        // "vnp_ReturnUrl" => $this->vnp_Returnurl,
+        // "vnp_TxnRef" => $this->idTransaction,
+        // "vnp_ExpireDate"=>$expire
 
         vnp_Params = await this.sortObject(vnp_Params);
         console.log('-------------- vnp_Params: ', vnp_Params);

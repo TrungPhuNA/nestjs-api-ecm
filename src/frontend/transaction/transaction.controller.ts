@@ -62,7 +62,7 @@ export class TransactionController {
     ) {
         try{
             const user: any  = req.user;
-            const data = await this.transactionService.create(formData, parseInt(user.id));
+            const data = await this.transactionService.create(formData, parseInt(user.id), req);
             const [transaction, link] = data;
             return new ResponseData(HttpStatus.OK, {
                 'transaction' : transaction,
