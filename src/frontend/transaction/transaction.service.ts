@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable, Logger } from "@nestjs/common";
 import CreateTransactionDto from "./dto/CreateTransaction.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -10,11 +10,15 @@ import { OrderService } from "../order/order.service";
 import UpdateTransactionDto from "./dto/UpdateTransaction.dto";
 import UpdateOrderDto from "../order/dto/UpdateOrder.dto";
 import * as moment from 'moment';
+import * as querystring from 'querystring';
+var sortObj = require('sort-object');
 
 @Injectable()
 export class TransactionService {
     @InjectRepository(TransactionEntity)
     private transactionRepository: Repository<TransactionEntity>
+
+    private logger = new Logger('TransactionService');
 
     constructor(
         private productService: ProductService,
@@ -124,15 +128,19 @@ export class TransactionService {
         vnp_Params['vnp_IpAddr'] = ip;
         vnp_Params['vnp_CreateDate'] = createDate;
 
-        vnp_Params = await this.sortObject(vnp_Params);
+        vnp_Params = sortObj(vnp_Params);
         console.log('-------------- vnp_Params: ', vnp_Params);
-        const signData = '?' + new URLSearchParams(vnp_Params).toString();
+        let signData = '?' + querystring.stringify(vnp_Params);
         const crypto = require('crypto');
         let hmac = await crypto.createHmac("sha512", secretKey);
-        let signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
-        vnp_Params['vnp_SecureHash'] = signed;
+        this.logger.warn(`============= hmac => :  ${hmac} `);
+        hmac.update(JSON.stringify(signData));
+        let hash = hmac.digest('hex');
+        this.logger.warn(`============= hash => :  ${hash} `);
+        vnp_Params['vnp_SecureHash'] = hash;
+        console.log('===================== vnp_Params', vnp_Params);
 
-        vnpUrl += '?' + new URLSearchParams(vnp_Params).toString();
+        vnpUrl += '?' + querystring.stringify(vnp_Params);
         console.log('================== vnpUrl: ', vnpUrl);
         return vnpUrl;
     }
