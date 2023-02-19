@@ -154,7 +154,7 @@ export class TransactionService {
 
         vnpUrl += '?' + querystring.stringify(vnp_Params, null, null);
         console.log('================== vnpUrl: ', encodeURIComponent(vnpUrl));
-        return encodeURIComponent(vnpUrl);
+        return vnpUrl;
     }
 
     async storeTransaction(transactionDto: StoreTransactionDto)
