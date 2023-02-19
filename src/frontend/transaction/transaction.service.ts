@@ -133,7 +133,7 @@ export class TransactionService {
         vnp_Params['vnp_OrderType'] = 'other';
         vnp_Params['vnp_ReturnUrl'] = returnUrl;
         vnp_Params['vnp_TxnRef'] = orderId;
-        vnp_Params['vnp_ExpireDate'] = expireDate;
+        // vnp_Params['vnp_ExpireDate'] = expireDate;
 
 
         vnp_Params = sortObj(vnp_Params);
