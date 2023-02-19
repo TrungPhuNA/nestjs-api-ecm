@@ -114,7 +114,6 @@ export class TransactionService {
         var date = new Date();
 
         let createDate = moment(date).format("YYYYMMDDHHmmss");
-        // let createDate = moment(date).format("YYYYMMDDHHmmss");
         let expireDate = moment(date).add(20, 'minutes').format("YYYYMMDDHHmmss");
         console.log('-------------createDate', moment(date));
         console.log('-------------expireDate', expireDate);
@@ -143,22 +142,17 @@ export class TransactionService {
         vnp_Params = sortObj(vnp_Params);
         console.log('-------------- vnp_Params: ', vnp_Params);
         let signData = '?' + querystring.stringify(vnp_Params, null, null);
+
         const crypto = require('crypto');
+        let hash = crypto.createHmac('sha512', secretKey).update(signData).digest('hex');
 
-        var hmac = await crypto.createHmac("sha512", secretKey);
 
-        let hash = crypto('sha512', secretKey)
-            .update(signData)
-            .digest('hex');
-
-        // let hash = hmac.update(Buffer.from(signData, 'utf-8')).digest("hex");
-
-        this.logger.warn(`============= hmac => :  ${hmac} `);
+        console.log('---------------- hash: => ',hash);
         vnp_Params['vnp_SecureHash'] = hash;
         console.log('===================== vnp_Params', vnp_Params);
 
         vnpUrl += '?' + querystring.stringify(vnp_Params, null, null);
-        console.log('================== vnpUrl: ', encodeURIComponent(vnpUrl));
+        console.log('================== vnpUrl: ', vnpUrl);
         return vnpUrl;
     }
 
