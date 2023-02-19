@@ -133,7 +133,7 @@ export class TransactionService {
 
         vnp_Params = sortObj(vnp_Params);
         console.log('-------------- vnp_Params: ', vnp_Params);
-        let signData = '?' + querystring.stringify(vnp_Params, null, null, { encodeURIComponent: vnp_Params => vnp_Params });
+        let signData = '?' + querystring.stringify(vnp_Params, null, null);
         const crypto = require('crypto');
 
         var hmac = await crypto.createHmac("sha512", secretKey);
@@ -143,7 +143,7 @@ export class TransactionService {
         vnp_Params['vnp_SecureHash'] = hash;
         console.log('===================== vnp_Params', vnp_Params);
 
-        vnpUrl += '?' + querystring.stringify(vnp_Params, null, null, { encodeURIComponent: vnp_Params => vnp_Params });
+        vnpUrl += '?' + querystring.stringify(vnp_Params, null, null);
         console.log('================== vnpUrl: ', vnpUrl);
         return vnpUrl;
     }
