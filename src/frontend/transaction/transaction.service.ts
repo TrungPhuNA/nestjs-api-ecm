@@ -104,7 +104,7 @@ export class TransactionService {
         var tmnCode = '3RDGQAX3';
         var secretKey = 'PMSBQTYJIQLJILQTWHKAESOMMTXYHFHE';
         var vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
-        var returnUrl = 'https://123code.net';
+        var returnUrl = 'http://reactjs.123code.net';
 
         var date = new Date();
 
@@ -143,20 +143,6 @@ export class TransactionService {
         vnpUrl += '?' + querystring.stringify(vnp_Params);
         console.log('================== vnpUrl: ', vnpUrl);
         return vnpUrl;
-    }
-
-    async sortObject(ObjectParams: any)
-    {
-        let sortable = [];
-        for (var vehicle in ObjectParams) {
-            sortable.push([vehicle, ObjectParams[vehicle]]);
-        }
-
-        sortable.sort(function(a, b) {
-            return a[1] - b[1];
-        });
-
-        return sortable;
     }
 
     async storeTransaction(transactionDto: StoreTransactionDto)
