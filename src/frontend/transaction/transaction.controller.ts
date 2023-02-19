@@ -19,6 +19,7 @@ import { JwtAuthGuard } from "../../auth/jwt-auth.guard";
 import { Paging } from "../../common/response/Paging";
 import { Request } from "express";
 import UpdateTransactionDto from "./dto/UpdateTransaction.dto";
+import { RealIP } from "nestjs-real-ip";
 
 @Controller('transaction')
 @ApiTags('Transaction')
@@ -58,11 +59,12 @@ export class TransactionController {
     @UseGuards(JwtAuthGuard)
     async create(
         @Body() formData : CreateTransactionDto,
-        @Req() req: Request
+        @Req() req: Request,
+        @RealIP() ip: string
     ) {
         try{
             const user: any  = req.user;
-            const data = await this.transactionService.create(formData, parseInt(user.id), req);
+            const data = await this.transactionService.create(formData, parseInt(user.id), ip);
             const [transaction, link] = data;
             return new ResponseData(HttpStatus.OK, {
                 'transaction' : transaction,

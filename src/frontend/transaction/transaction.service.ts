@@ -10,7 +10,6 @@ import { OrderService } from "../order/order.service";
 import UpdateTransactionDto from "./dto/UpdateTransaction.dto";
 import UpdateOrderDto from "../order/dto/UpdateOrder.dto";
 import * as moment from 'moment';
-import { RealIP } from 'nestjs-real-ip';
 
 @Injectable()
 export class TransactionService {
@@ -49,7 +48,7 @@ export class TransactionService {
         });
     }
 
-    async create(transactionDto: CreateTransactionDto, userID: number, req: any)
+    async create(transactionDto: CreateTransactionDto, userID: number, ip: any)
     {
         let products: any = transactionDto.products;
         let total_price = 0;
@@ -91,12 +90,12 @@ export class TransactionService {
             }
         }
 
-        let link =  await this.storeVnPay(transaction, req);
+        let link =  await this.storeVnPay(transaction, ip);
 
         return [transaction, link];
     }
 
-    async storeVnPay(transaction: any, req: any)
+    async storeVnPay(transaction: any, ip: any)
     {
         var tmnCode = '3RDGQAX3';
         var secretKey = 'PMSBQTYJIQLJILQTWHKAESOMMTXYHFHE';
@@ -122,7 +121,7 @@ export class TransactionService {
         vnp_Params['vnp_OrderType'] = 'other';
         vnp_Params['vnp_Amount'] = amount * 100;
         vnp_Params['vnp_ReturnUrl'] = returnUrl;
-        vnp_Params['vnp_IpAddr'] = RealIP;
+        vnp_Params['vnp_IpAddr'] = ip;
         vnp_Params['vnp_CreateDate'] = createDate;
 
         vnp_Params = await this.sortObject(vnp_Params);
