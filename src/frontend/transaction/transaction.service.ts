@@ -13,7 +13,6 @@ import * as moment from 'moment';
 import * as querystring from 'querystring';
 var sortObj = require('sort-object');
 import * as ip from "ip";
-import { urlencoded } from "express";
 
 @Injectable()
 export class TransactionService {
@@ -147,7 +146,12 @@ export class TransactionService {
         const crypto = require('crypto');
 
         var hmac = await crypto.createHmac("sha512", secretKey);
-        let hash = hmac.update(Buffer.from(signData, 'utf-8')).digest("hex");
+
+        let hash = crypto('sha512', secretKey)
+            .update(signData)
+            .digest('hex');
+
+        // let hash = hmac.update(Buffer.from(signData, 'utf-8')).digest("hex");
 
         this.logger.warn(`============= hmac => :  ${hmac} `);
         vnp_Params['vnp_SecureHash'] = hash;
