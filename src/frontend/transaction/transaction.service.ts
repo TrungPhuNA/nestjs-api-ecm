@@ -125,7 +125,7 @@ export class TransactionService {
         vnp_Params['vnp_CurrCode'] = currCode;
         vnp_Params['vnp_IpAddr'] = ip.address();
         vnp_Params['vnp_Locale'] = 'vn';
-        vnp_Params['vnp_OrderInfo'] = 'Thanh toán online đơn hàng';
+        vnp_Params['vnp_OrderInfo'] = 'ttonline';
         vnp_Params['vnp_OrderType'] = 'other';
         vnp_Params['vnp_ReturnUrl'] = returnUrl;
         vnp_Params['vnp_TxnRef'] = orderId;
