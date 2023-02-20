@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, Logger } from "@nestjs/common";
+import { HttpException, HttpStatus, Inject, Injectable, Logger } from "@nestjs/common";
 import CreateTransactionDto from "./dto/CreateTransaction.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -13,6 +13,7 @@ import * as moment from 'moment';
 import * as querystring from 'querystring';
 var sortObj = require('sort-object');
 import * as ip from "ip";
+import { ServiceCore } from "../../curl/serviceCore";
 
 @Injectable()
 export class TransactionService {
@@ -24,6 +25,7 @@ export class TransactionService {
     constructor(
         private productService: ProductService,
         private orderService: OrderService,
+        @Inject(ServiceCore) private readonly serviceCore: ServiceCore,
     ) {
     }
 
@@ -96,8 +98,22 @@ export class TransactionService {
         }
 
         let link =  await this.storeVnPay(transaction);
+        let linkPayment = await this.getLinkPaymentVnpay(transaction);
+        console.log('--------------------linkPayment; ', linkPayment);
+        if (linkPayment.status && linkPayment.status == 'success') {
+            return [transaction, linkPayment.data.link_payment];
+        }
+    }
 
-        return [transaction, link];
+    async getLinkPaymentVnpay(transaction: any)
+    {
+        let data = {
+            "total" : transaction.t_total_money,
+            "transaction_id" : transaction.id,
+            "url_callback" : "https://123code.net"
+        }
+        return await this.serviceCore.getLinkPaymentVnpay(data)
+        // http://laravel-qlsanpham.abc:8888/api/gen-payment-vnpay
     }
 
     async storeVnPay(transaction: any)

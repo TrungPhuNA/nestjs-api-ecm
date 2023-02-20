@@ -10,9 +10,19 @@ import * as Joi from '@hapi/joi';
 import { ExceptionsLoggerFilter } from "./utils/exceptionsLogger.filter";
 import { APP_FILTER } from "@nestjs/core";
 import { PaymentModule } from './payment/payment.module';
+import { HttpModule } from "@nestjs/axios";
+import { ServiceCore } from "./curl/serviceCore";
 
 @Module({
     imports: [
+        HttpModule.registerAsync({
+            useFactory: async () => ({
+                timeout: 120000,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }),
+        }),
         BackendModule,
         FrontendModule,
         DatabaseModule,
@@ -29,7 +39,7 @@ import { PaymentModule } from './payment/payment.module';
         }),
         AuthModule,
         UploadModule,
-        PaymentModule
+        PaymentModule,
     ],
     controllers: [AppController],
     providers: [
@@ -37,6 +47,6 @@ import { PaymentModule } from './payment/payment.module';
             provide: APP_FILTER,
             useClass: ExceptionsLoggerFilter,
         },
-    ],
+    ]
 })
 export class AppModule {}
