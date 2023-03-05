@@ -50,4 +50,18 @@ export class ProductController {
             return new ResponseData(HttpStatus.INTERNAL_SERVER_ERROR, e.response,'error');
         }
     }
+
+    @Get('show-slug/:slug')
+    async showSlug(
+        @Param('slug') slug: string
+    )
+    {
+        try{
+            const data = await this.productService.showSlug(slug);
+            return new ResponseData(HttpStatus.OK, data);
+        }catch (e) {
+            console.log('----------ERROR: ProductController@show => ', e);
+            return new ResponseData(HttpStatus.INTERNAL_SERVER_ERROR, e.response,'error');
+        }
+    }
 }

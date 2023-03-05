@@ -57,6 +57,16 @@ export class ProductService {
         })
     }
 
+    async showSlug(slug: string)
+    {
+        return await this.productRepository.findOne({
+            where: {
+                pro_slug: slug
+            },
+            relations: {category : true},
+        })
+    }
+
     async incrementProduction(id: number, vote: number)
     {
         const product = await this.productRepository.findOne(
