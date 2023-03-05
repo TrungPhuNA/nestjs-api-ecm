@@ -32,4 +32,13 @@ export class CategoryService {
             }
         })
     }
+
+    async showSlug(slug: string)
+    {
+        return await this.categoryRepository.findOne({
+            where: {
+                c_slug: slug
+            }
+        })
+    }
 }

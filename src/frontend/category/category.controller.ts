@@ -42,4 +42,14 @@ export class CategoryController {
         const data = await this.categoryService.show(id);
         return new ResponseData(HttpStatus.OK, data);
     }
+
+    @Get('show-slug/:slug')
+    async showSlug(
+        @Param('slug') slug: string
+    )
+    {
+        console.log('-------------- show', slug);
+        const data = await this.categoryService.showSlug(slug);
+        return new ResponseData(HttpStatus.OK, data);
+    }
 }
