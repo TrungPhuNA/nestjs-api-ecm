@@ -23,6 +23,9 @@ class StoreTransactionDto {
     t_user_id:  number | 0;
 
     @IsNumber()
+    t_type:  number | 1;
+
+    @IsNumber()
     @IsNotEmpty()
     t_total_discount:  number | 0;
 

@@ -79,6 +79,7 @@ export class TransactionService {
         newTransaction.t_name = transactionDto.name;
         newTransaction.t_phone = transactionDto.phone;
         newTransaction.t_note = transactionDto.note;
+        newTransaction.t_type = transactionDto.t_type;
         newTransaction.created_at = new Date();
         console.log('------------ newTransaction: ', newTransaction);
         const transaction = await this.storeTransaction(newTransaction);
@@ -96,7 +97,9 @@ export class TransactionService {
                 await this.orderService.store(orderDto);
             }
         }
-
+        if (transactionDto.t_type == 2) {
+            return [transaction , null];
+        }
         let link =  await this.storeVnPay(transaction);
         let linkPayment = await this.getLinkPaymentVnpay(transaction);
         console.log('--------------------linkPayment; ', linkPayment);

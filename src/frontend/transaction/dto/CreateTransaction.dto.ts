@@ -13,6 +13,8 @@ class CreateTransactionDto {
     @IsNotEmpty()
     phone: string;
 
+    t_type: number | 1;
+
     @IsNumber()
     @IsNotEmpty()
     total_price:  number | 0;
