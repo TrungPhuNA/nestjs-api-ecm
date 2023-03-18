@@ -110,11 +110,13 @@ export class TransactionService {
 
     async getLinkPaymentVnpay(transaction: any)
     {
+        console.log('------------transaction: ', transaction);
         let data = {
             "total" : transaction.t_total_money,
             "transaction_id" : transaction.id,
             "url_callback" : "https://123code.net"
         }
+        console.log('------------- getLinkPaymentVnpay@data: ', data);
         return await this.serviceCore.getLinkPaymentVnpay(data)
     }
 
