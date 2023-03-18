@@ -28,7 +28,7 @@ export class ProductService {
         if (filters.product_ids)
         {
             let ids = filters.product_ids.split(',');
-            condition.product_ids = In(ids);
+            condition.id = In(ids);
         }
 
 
