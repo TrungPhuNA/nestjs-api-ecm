@@ -63,7 +63,7 @@ export class TransactionController {
     ) {
         try{
             const user: any  = req.user;
-            let userID = user.id ? user.id : 0;
+            let userID = (user && user.id) ? user.id : 0;
             const data = await this.transactionService.create(formData, parseInt(userID), ip);
             const [transaction, link] = data;
             return new ResponseData(HttpStatus.OK, {
