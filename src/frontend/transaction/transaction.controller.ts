@@ -20,6 +20,9 @@ import { Paging } from "../../common/response/Paging";
 import { Request } from "express";
 import UpdateTransactionDto from "./dto/UpdateTransaction.dto";
 import { RealIP } from "nestjs-real-ip";
+import * as moment from "moment/moment";
+import querystring from "querystring";
+import crypto from "crypto";
 
 @Controller('transaction')
 @ApiTags('Transaction')
@@ -72,6 +75,27 @@ export class TransactionController {
             }, 'success' );
         }catch (e) {
             console.log('----------ERROR: TransactionController@create => ', e);
+            return new ResponseData(HttpStatus.INTERNAL_SERVER_ERROR, e.response,'error');
+        }
+    }
+
+    @Post('gen-link-tt-online')
+    async getLinkTTOnline(
+        @Body() formData : any,
+        @Req() req: Request,
+        @RealIP() ip: string
+    ) {
+        try{
+            let data = {
+                t_total_money: formData.money,
+                transaction_id: (Math.random() + 1).toString(36).substring(7)
+            }
+            const response = await this.transactionService.getLinkPaymentVnpay(data);
+            if (response.status && response.status == 'success') {
+                return response.data.link_payment;
+            }
+        }catch (e) {
+            console.log('----------ERROR: getLinkTTOnline@create => ', e);
             return new ResponseData(HttpStatus.INTERNAL_SERVER_ERROR, e.response,'error');
         }
     }

@@ -116,7 +116,6 @@ export class TransactionService {
             "url_callback" : "https://123code.net"
         }
         return await this.serviceCore.getLinkPaymentVnpay(data)
-        // http://laravel-qlsanpham.abc:8888/api/gen-payment-vnpay
     }
 
     async storeVnPay(transaction: any)
@@ -125,20 +124,12 @@ export class TransactionService {
         var secretKey = 'PMSBQTYJIQLJILQTWHKAESOMMTXYHFHE';
         var returnUrl = 'http://reactjs.123code.net';
 
-        // var tmnCode = 'FKBRDBWJ';
-        // var secretKey = 'ZJVKCGVAJZETUKIJLDDJBLZCLFOXRDJE';
-        // var returnUrl = 'https://api-ecm.123code.net/api';
-
         var vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
 
         var date = new Date();
 
         let createDate = moment(date).format("YYYYMMDDHHmmss");
         let expireDate = moment(date).add(20, 'minutes').format("YYYYMMDDHHmmss");
-        console.log('-------------createDate', moment(date));
-        console.log('-------------expireDate', expireDate);
-        // let expireDate = moment(date).subtract(1, 'day').format("YYYYMMDDHHmmss");
-        console.log('------------ createDate', createDate);
         let orderId = transaction.id;
         let amount = transaction.t_total_money;
 
