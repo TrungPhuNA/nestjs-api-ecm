@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from "@nestjs/typeorm";
 import ProductEntity from "../../entities/product.entity";
-import { Repository, Raw, Like, MoreThan } from "typeorm";
+import { Repository, Raw, Like, MoreThan, In } from "typeorm";
 
 @Injectable()
 export class ProductService {
@@ -22,6 +22,15 @@ export class ProductService {
             condition.pro_name = Like(`or %${filters.name}%`);
             condition.pro_slug = Like(`or %${filters.name}%`);
         }
+
+        console.log('------------ product_ids: ', filters.product_ids);
+
+        if (filters.product_ids)
+        {
+            // let number = filters.product_ids.split(',');
+            condition.product_ids = In(filters.product_ids);
+        }
+
 
         let order: any = { id: "DESC"};
 

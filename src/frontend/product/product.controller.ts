@@ -27,6 +27,7 @@ export class ProductController {
             sort: req.query.sort || "",
             name: req.query.name || "",
             category_id: req.query.category_id || "",
+            product_ids: req.query.product_ids || "",
             sale: req.query.sale || ""
         }
 

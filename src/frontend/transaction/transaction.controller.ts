@@ -56,7 +56,6 @@ export class TransactionController {
     }
 
     @Post('create')
-    @UseGuards(JwtAuthGuard)
     async create(
         @Body() formData : CreateTransactionDto,
         @Req() req: Request,
@@ -64,7 +63,8 @@ export class TransactionController {
     ) {
         try{
             const user: any  = req.user;
-            const data = await this.transactionService.create(formData, parseInt(user.id), ip);
+            let userID = user.id ? user.id : 0;
+            const data = await this.transactionService.create(formData, parseInt(userID), ip);
             const [transaction, link] = data;
             return new ResponseData(HttpStatus.OK, {
                 'transaction' : transaction,
