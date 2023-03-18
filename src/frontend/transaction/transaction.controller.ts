@@ -88,7 +88,8 @@ export class TransactionController {
         try{
             let data = {
                 t_total_money: formData.money,
-                id: Math.floor(Math.random() * 1000000)
+                id: Math.floor(Math.random() * 1000000),
+                url_callback: formData.url_callback
             }
             const response = await this.transactionService.getLinkPaymentVnpay(data);
             if (response.status && response.status == 'success') {
