@@ -3,7 +3,6 @@ import { Repository } from "typeorm";
 import TransactionEntity from "../../entities/transaction.entity";
 import { ProductService } from "../../frontend/product/product.service";
 import { OrderService } from "../../frontend/order/order.service";
-import { ServiceCore } from "../../curl/serviceCore";
 
 @Injectable()
 export class TransactionService {
@@ -15,7 +14,6 @@ export class TransactionService {
     constructor(
         private productService: ProductService,
         private orderService: OrderService,
-        @Inject(ServiceCore) private readonly serviceCore: ServiceCore,
     ) {
     }
 
