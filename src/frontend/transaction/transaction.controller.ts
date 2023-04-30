@@ -144,6 +144,10 @@ export class TransactionController {
             const data = {
                 "status" : [
                     {
+                        'value' : -1,
+                        'name' : 'Huỷ hàng'
+                    },
+                    {
                         'value' : 1,
                         'name' : 'Khởi tạo'
                     },
@@ -154,6 +158,10 @@ export class TransactionController {
                     {
                         'value' : 3,
                         'name' : 'Chờ lấy hàng'
+                    },
+                    {
+                        'value' : 4,
+                        'name' : 'Hoàn thành'
                     },
                 ]
             }

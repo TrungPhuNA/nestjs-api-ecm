@@ -35,7 +35,7 @@ export class TransactionService {
             order: order,
             relations: {
                 orders : {
-                    products: true
+                    product: true
                 }
             },
             take: paging.page_size,

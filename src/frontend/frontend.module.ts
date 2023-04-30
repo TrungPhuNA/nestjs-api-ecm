@@ -8,8 +8,9 @@ import { ArticleModule } from './article/article.module';
 import { MenuModule } from './menu/menu.module';
 import { VoteModule } from './vote/vote.module';
 import { CommentModule } from './comment/comment.module';
+import { LogApiModule } from './log-api/log-api.module';
 
 @Module({
-  imports: [ProductModule, CategoryModule, UserModule, TransactionModule, OrderModule, ArticleModule, MenuModule, VoteModule, CommentModule]
+  imports: [ProductModule, CategoryModule, UserModule, TransactionModule, OrderModule, ArticleModule, MenuModule, VoteModule, CommentModule, LogApiModule]
 })
 export class FrontendModule {}

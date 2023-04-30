@@ -44,7 +44,7 @@ export class ProductService {
                 }
             }
         }
-        console.log('------------- condition: ', condition);
+
         return await this.productRepository.findAndCount({
             where: condition,
             order: order,

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Req } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Req } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CategoryService } from "./category.service";
 import CreateCategoryDto from "./dto/CreateCategory.dto";
@@ -60,6 +60,15 @@ export class CategoryController {
     )
     {
         const response = await this.categoryService.update(id, categoryDto);
+        return new ResponseData(200, response);
+    }
+
+    @Delete('delete/:id')
+    async delete(
+        @Param('id') id: number
+    )
+    {
+        const response = await this.categoryService.deleteCategory(id);
         return new ResponseData(200, response);
     }
 }

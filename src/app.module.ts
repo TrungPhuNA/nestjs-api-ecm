@@ -11,8 +11,8 @@ import { ExceptionsLoggerFilter } from "./utils/exceptionsLogger.filter";
 import { APP_FILTER } from "@nestjs/core";
 import { PaymentModule } from './payment/payment.module';
 import { HttpModule } from "@nestjs/axios";
-import { ServiceCore } from "./curl/serviceCore";
 
+// @ts-ignore
 @Module({
     imports: [
         HttpModule.registerAsync({
@@ -39,7 +39,7 @@ import { ServiceCore } from "./curl/serviceCore";
         }),
         AuthModule,
         UploadModule,
-        PaymentModule,
+        PaymentModule
     ],
     controllers: [AppController],
     providers: [

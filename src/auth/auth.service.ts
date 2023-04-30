@@ -88,19 +88,13 @@ export class AuthService {
                 {
                     sub: userId,
                     username,
-                },
-                {
-                    expiresIn: '15m',
-                },
+                }
             ),
             this.jwtService.signAsync(
                 {
                     sub: userId,
                     username,
-                },
-                {
-                    expiresIn: '7d',
-                },
+                }
             ),
         ]);
 

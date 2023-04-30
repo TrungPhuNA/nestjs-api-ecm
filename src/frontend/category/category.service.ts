@@ -11,7 +11,7 @@ export class CategoryService {
     async getListsCategory(paging: any, filters: any)
     {
         let condition: any = {};
-        if (filters.hot) condition.c_hot = filters.c_hot;
+        if (filters.hot) condition.c_hot = 1;
         if (filters.status) condition.c_status = filters.c_status;
 
         let order: any = { id: "DESC"};

@@ -41,13 +41,12 @@ export class TransactionService {
 
         let order: any = { id: "DESC"};
 
-        console.log('------------- filters: ', filters);
         return await this.transactionRepository.findAndCount({
             where: condition,
             order: order,
             relations: {
                 orders : {
-                    products: true
+                    product: true
                 }
             },
             take: paging.page_size,
