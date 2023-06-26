@@ -14,6 +14,7 @@ class CreateTransactionDto {
     phone: string;
 
     t_type: number | 1;
+    t_user_id?: number | 0;
 
     @IsNumber()
     @IsNotEmpty()

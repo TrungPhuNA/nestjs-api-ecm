@@ -74,7 +74,7 @@ export class TransactionService {
         let newTransaction = new StoreTransactionDto();
         newTransaction.t_total_money = total_price;
         newTransaction.t_total_discount = total_discount;
-        newTransaction.t_user_id = userID;
+        newTransaction.t_user_id = transactionDto.t_user_id;
         newTransaction.t_name = transactionDto.name;
         newTransaction.t_phone = transactionDto.phone;
         newTransaction.t_note = transactionDto.note;
