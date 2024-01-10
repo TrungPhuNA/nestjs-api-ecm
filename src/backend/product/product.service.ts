@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Raw, Repository } from "typeorm";
 import ProductEntity from "../../entities/product.entity";
 import CreateProductDto from "./dto/CreateProduct.dto";
 import UpdateProductDto from "./dto/UpdateProduct.dto";
@@ -14,12 +14,17 @@ export class ProductService {
 
     async getListsProducts(paging: any, filters: any)
     {
+        console.log('---------- filter:', filters);
         let condition: any = {};
         if (filters.hot) condition.c_hot = filters.pro_hot;
         if (filters.status) condition.c_status = filters.pro_status;
+        if (filters.name) condition.pro_name = Raw(alias => `${alias} LIKE '%${filters.name}%'`);
 
         return await this.productRepository.findAndCount({
             where: condition,
+            relations: {
+                category: true,
+            },
             take: paging.page_size,
             skip: (paging.page - 1) * paging.page_size
         });

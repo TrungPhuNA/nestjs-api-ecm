@@ -25,6 +25,7 @@ export class ProductController {
         const filters = {
             hot : request.query.hot || "",
             status : request.query.status || "",
+            name: request.query.name || "",
         }
 
         const response = await this.productService.getListsProducts(paging, filters);

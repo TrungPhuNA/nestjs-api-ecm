@@ -145,23 +145,29 @@ export class TransactionController {
                 "status" : [
                     {
                         'value' : -1,
-                        'name' : 'Huỷ hàng'
+                        'name' : 'Huỷ hàng',
+                        'class' : 'danger'
                     },
                     {
                         'value' : 1,
-                        'name' : 'Khởi tạo'
+                        'name' : 'Khởi tạo',
+                        'class' : 'light',
+                        'text' : 'text-dark'
                     },
                     {
                         'value' : 2,
-                        'name' : 'Chờ xử lý'
+                        'name' : 'Chờ xử lý',
+                        'class' : 'warning'
                     },
                     {
                         'value' : 3,
-                        'name' : 'Chờ lấy hàng'
+                        'name' : 'Chờ lấy hàng',
+                        'class': 'secondary'
                     },
                     {
                         'value' : 4,
-                        'name' : 'Hoàn thành'
+                        'name' : 'Hoàn thành',
+                        'class': 'primary'
                     },
                 ]
             }
